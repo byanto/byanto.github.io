@@ -20,6 +20,20 @@ body {
     margin-top: 20px;
 }
 
+.contact-row{
+    padding-bottom: 15px;
+}
+
+.contact-icon{
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #5C5E2B;
+}
+
+a:hover span.contact-icon.fa {
+    color: coral;
+}
+
 hr{
     border-width: 2px;
     border-top-color: #BCBBBB;
