@@ -2,8 +2,9 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://localhost:1313/</loc><lastmod>2025-09-29T13:04:55&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:1313/posts/my-first-post/</loc><lastmod>2025-09-29T13:04:55&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:1313/posts/</loc><lastmod>2025-09-29T13:04:55&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/about/</loc><lastmod>2025-10-01T21:20:44&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/</loc><lastmod>2025-10-01T21:20:44&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</loc><lastmod>2025-10-01T12:08:44&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/posts/</loc><lastmod>2025-10-01T12:08:44&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/categories/</loc></url><url>
             <loc>http://localhost:1313/tags/</loc></url></urlset>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Abouts on Budi Yanto</title>
+    <link>http://localhost:1313/about/</link>
+    <description>Recent content in Abouts on Budi Yanto</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Oct 2025 12:08:44 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/about/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My Journey: From Developer to Entrepeneur and Back Again</title>
+      <link>http://localhost:1313/about/index-copy/</link>
+      <pubDate>Wed, 01 Oct 2025 12:08:44 +0700</pubDate>
+      <guid>http://localhost:1313/about/index-copy/</guid>
+      <description>&lt;h2 id=&#34;a-new-chapter&#34;&gt;A New Chapter&lt;/h2&gt;&#xA;&lt;p&gt;If you look at my LinkedIn profile, you might have a few questions. A Master&amp;rsquo;s in Computer Science from TU Berlin, a job as a Java developer, and then&amp;hellip; a sudden shift in 2017 to run an e-commerce company in Indonesia for eight years. It&amp;rsquo;s not exactly a straight line.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;m writing this because I&amp;rsquo;m starting a new chapter. For a while, I&amp;rsquo;ve been thinking about what comes next. After building a successful business from the ground up, I&amp;rsquo;ve realized what I miss most is the craft of building software. So, I&amp;rsquo;m returning to my roots as a hands-on backend developer. This blog is where I plan to document that journey.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
