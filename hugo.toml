@@ -19,6 +19,14 @@ enableGitInfo = true
         title = ""
     [[menu.main]]
         weight = 2
+        identifier = "til"
+        pre = ""
+        post = ""
+        name = "TIL"
+        url = "/til/"
+        title = ""
+    [[menu.main]]
+        weight = 3
         identifier = "about"
         pre = ""
         post = ""
@@ -26,7 +34,7 @@ enableGitInfo = true
         url = "/about/"
         title = ""
     [[menu.main]]
-        weight = 3
+        weight = 4
         identifier = "github"
         pre = "<i class='fab fa-github fa-fw' aria-hidden='true'></i>"
         post = ""
@@ -82,8 +90,3 @@ enableGitInfo = true
     [params.social]
         GitHub = "byanto"
         Linkedin = "byanto"
-
-
-
-
-

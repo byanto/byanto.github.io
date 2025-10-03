@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>True Integration Tests with Spring Boot and Testcontainers - Budi Yanto</title><meta name="Description" content="Software Developer"><meta property="og:url" content="http://localhost:1313/til/2025-10-02-true-integration-tests-with-spring-boot-and-testcontainers/">
+  <meta property="og:site_name" content="Budi Yanto">
+  <meta property="og:title" content="True Integration Tests with Spring Boot and Testcontainers">
+  <meta property="og:description" content="Today, I hit a big milestone in my Fintrackr project: writing my first real integration test for the database layer. My goal was simple: how can I be 100% sure that my JPA repositories work with a real PostgreSQL database, without any hassle?
+I explored a few ways to do this, and learned a lot about the pros and cons of each approach.
+Option 1: The Simulator (An In-Memory H2 Database) The first common approach is to use an in-memory database like H2. Spring Boot makes this very easy. We add the H2 dependency, and Spring Boot will automatically configure our tests to run against this fast, temporary database.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="til">
+    <meta property="article:published_time" content="2025-10-02T23:50:10+00:00">
+    <meta property="article:modified_time" content="2025-10-02T23:50:10+00:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="True Integration Tests with Spring Boot and Testcontainers">
+  <meta name="twitter:description" content="Today, I hit a big milestone in my Fintrackr project: writing my first real integration test for the database layer. My goal was simple: how can I be 100% sure that my JPA repositories work with a real PostgreSQL database, without any hassle?
+I explored a few ways to do this, and learned a lot about the pros and cons of each approach.
+Option 1: The Simulator (An In-Memory H2 Database) The first common approach is to use an in-memory database like H2. Spring Boot makes this very easy. We add the H2 dependency, and Spring Boot will automatically configure our tests to run against this fast, temporary database.">
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/til/2025-10-02-true-integration-tests-with-spring-boot-and-testcontainers/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "True Integration Tests with Spring Boot and Testcontainers",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/til\/2025-10-02-true-integration-tests-with-spring-boot-and-testcontainers\/"
+        },"genre": "til","wordcount":  985 ,
+        "url": "http:\/\/localhost:1313\/til\/2025-10-02-true-integration-tests-with-spring-boot-and-testcontainers\/","datePublished": "2025-10-02T23:50:10+00:00","dateModified": "2025-10-02T23:50:10+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Budi Yanto"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Budi Yanto">Home</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/til/"> TIL </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/byanto" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Budi Yanto">Home</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/til/" title="">TIL</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/byanto" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">True Integration Tests with Spring Boot and Testcontainers</h1><div class="content" id="content"><p>Today, I hit a big milestone in my <em>Fintrackr</em> project: writing my first real integration test for the database layer. My goal was simple: how can I be 100% sure that my JPA repositories work with a <em>real</em> PostgreSQL database, without any hassle?</p>
+<p>I explored a few ways to do this, and learned a lot about the pros and cons of each approach.</p>
+<h3 id="option-1-the-simulator-an-in-memory-h2-database">Option 1: The Simulator (An In-Memory H2 Database)</h3>
+<p>The first common approach is to use an in-memory database like H2. Spring Boot makes this very easy. We add the H2 dependency, and Spring Boot will automatically configure our tests to run against this fast, temporary database.</p>
+<ul>
+<li><strong>The Problem:</strong> H2 is <strong>not</strong> PostgreSQL. While it speaks SQL, it has different data types, function names, and behaviors. A query that works on H2 might fail on our real PostgreSQL production database.</li>
+<li><strong>The Analogy:</strong> It&rsquo;s like practicing for a Formula 1 race in a high-end go-kart. We&rsquo;re driving, we&rsquo;re learning the basics, but it&rsquo;s not the real car. We might be in for a surprise on race day.</li>
+</ul>
+<h3 id="option-2-the-shared-kitchen-a-manual-test-database">Option 2: The Shared Kitchen (A Manual Test Database)</h3>
+<p>The next option is to set up a separate, permanent PostgreSQL database just for testing. This is better, since we&rsquo;re testing against the real technology.</p>
+<ul>
+<li><strong>The Problem:</strong> This approach is a maintenance nightmare. The database isn&rsquo;t clean for every test run, so data from a previous test can cause our current test to fail. Every developer has to manually install and manage this database, and it&rsquo;s hard to keep it consistent with teammates and the CI/CD server.</li>
+<li><strong>The Analogy:</strong> This is like a group of chefs sharing one kitchen. If one chef leaves a mess (dirty data), the next chef&rsquo;s dish (the next test) is ruined. It&rsquo;s slow, unreliable, and requires constant cleanup.</li>
+</ul>
+<h3 id="option-3-the-solution-the-private-disposable-kitchen-testcontainers">Option 3 (The Solution): The Private, Disposable Kitchen (Testcontainers)</h3>
+<p>This is the modern, professional solution that solves all the problems above. Testcontainers is a library that programmatically starts (and stops) a real Docker container for our tests.</p>
+<ul>
+<li><strong>The Benefit:</strong> We get a <strong>brand-new, perfectly clean, real</strong> PostgreSQL database for every single test run. When the test is over, the database is automatically destroyed. No manual setup, no cleanup, no interference.</li>
+<li><strong>The Analogy:</strong> It&rsquo;s like giving every chef their own private, brand-new, perfectly clean kitchen for every dish they cook. When they&rsquo;re done, the entire kitchen is thrown away. It guarantees a perfect start, every time.</li>
+</ul>
+<h3 id="the-magic-explained-what-container-and-serviceconnection-replace">The &ldquo;Magic&rdquo; Explained: What <code>@Container</code> and <code>@ServiceConnection</code> Replace</h3>
+<p>The combination of <code>@Container</code> and <code>@ServiceConnection</code> is a modern and highly effective way to set up integration tests in Spring Boot that require external services, like a database.
+So how does it work? These two annotations replace a lot of manual work.</p>
+<p><strong><code>@Container</code></strong></p>
+<p>This annotation comes from the <strong>Testcontainers</strong> library. Its job is to manage the lifecycle of a Docker container for our tests.</p>
+<ul>
+<li><strong>What it does</strong>: It marks the <em>PostgreSQLContainer</em> field as a resource that should be managed by the Testcontainers JUnit 5 extension (which is enabled by <em>@Testcontainers</em> annotation at the class level).</li>
+<li><strong>Lifecycle Management</strong>: Testcontainers will automatically:</li>
+</ul>
+<ol>
+<li>Start the <em>postgres</em> Docker container before any tests in this class are run.</li>
+<li>Stop and remove the container after all tests in the class have finished.</li>
+</ol>
+<ul>
+<li><strong>Static Field</strong>: The <em>postgres</em> container is declared as <em>static</em>. This is a common optimization. It means a single container is started once for all test methods in the <em>Test</em> class, rather than starting a new container for each test. This significantly speeds up our test suite.</li>
+</ul>
+<p><strong><code>@Container</code> replaces the need to manually:</strong></p>
+<ol>
+<li>Install PostgreSQL on our machine.</li>
+<li>Start the database server before we run our tests.</li>
+<li>Create a specific user and password for testing.</li>
+<li>Stop the database server after we&rsquo;re done.</li>
+</ol>
+<p><strong><code>@ServiceConnection</code></strong></p>
+<p>This annotation is a game-changer introduced in <strong>Spring Boot 3.1</strong>. It dramatically simplifies connecting our test&rsquo;s ApplicationContext to the service running in the Testcontainer.</p>
+<ul>
+<li><strong>What it does</strong>: It tells Spring Boot to automatically inspect the container (in this case, a <em>PostgreSQLContainer</em>) and configure the necessary connection properties for us.</li>
+<li><strong>Automatic Configuration</strong>: Without any manual effort, Spring Boot will:</li>
+</ul>
+<ol>
+<li>Wait for the container to be ready.</li>
+<li>Get the dynamic JDBC URL, username, and password from the running <em>PostgreSQLContainer</em>.</li>
+<li>Set the <em>spring.datasource.url</em>, <em>spring.datasource.username</em>, and <em>spring.datasource.password</em> properties for the test environment.</li>
+</ol>
+<p><strong><code>@ServiceConnection</code> replaces the need to manually:</strong></p>
+<ol>
+<li>Create a separate test configuration file (like <code>application-test.properties</code>).</li>
+<li>Find the random port that Docker assigned to our test database container.</li>
+<li>Manually override our Spring Boot properties (<code>spring.datasource.url</code>, <code>username</code>, <code>password</code>) to point to that specific, temporary database.</li>
+</ol>
+<p><strong>How They Work Together</strong></p>
+<ol>
+<li><em>@Testcontainers</em> activates the Testcontainers extension.</li>
+<li><em>@Container</em> starts the PostgreSQLContainer instance.</li>
+<li><em>@ServiceConnection</em> sees the running container and automatically wires up the Spring DataSource to connect to it.</li>
+<li><em>@DataJpaTest</em> then uses this container-backed DataSource to run our repository tests against a real PostgreSQL database.</li>
+</ol>
+<p>This combination replaces the older, more verbose pattern to manually map the container&rsquo;s properties to Spring&rsquo;s properties. It&rsquo;s cleaner, less error-prone, and more declarative.</p>
+<h3 id="the-code">The Code</h3>
+<p>First, the necessary dependencies for <em>Testcontainers</em> and <em>PostgreSQL</em> must be added to the <code>pom.xml</code> file:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-xml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;artifactId&gt;</span>spring-boot-testcontainers<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>org.testcontainers<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;artifactId&gt;</span>junit-jupiter<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>org.testcontainers<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;artifactId&gt;</span>postgresql<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span></span></span></code></pre></div></div>
+<p>Then, setting up the test class was incredibly clean:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Testcontainers</span><span class="w"> </span><span class="c1">// 1. Enable the Testcontainers extension</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@DataJpaTest</span><span class="w"> </span><span class="c1">// 2. Set up a JPA test environment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 3. Tell Spring not to replace the application&#39;s configured DataSource (the real database)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@AutoConfigureTestDatabase</span><span class="p">(</span><span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AutoConfigureTestDatabase</span><span class="p">.</span><span class="na">Replace</span><span class="p">.</span><span class="na">NONE</span><span class="p">)</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">PortfolioRepositoryTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Container</span><span class="w"> </span><span class="c1">// 4. Define the container to be used for all tests in this class</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@ServiceConnection</span><span class="w"> </span><span class="c1">// 5. The magic! Automatically connects Spring to this container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="n">PostgreSQLContainer</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PostgreSQLContainer</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="s">&#34;postgres:17-alpine&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">PortfolioRepository</span><span class="w"> </span><span class="n">portfolioRepository</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ... test methods</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<h3 id="the-takeaway">The Takeaway</h3>
+<p>I learned that writing high-fidelity integration tests doesn&rsquo;t have to be complicated. With <em>Testcontainers</em> and <em>Spring Boot</em>, we can run our tests against a real, disposable PostgreSQL database every single time, which gives us huge confidence that our code is correct and well tested.</p>
+</div></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Budi Yanto</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/algoliasearch/lite/browser.umd.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Today I Learned (TIL) on Budi Yanto</title>
+    <link>http://localhost:1313/til/</link>
+    <description>Recent content in Today I Learned (TIL) on Budi Yanto</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 02 Oct 2025 23:50:10 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/til/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>True Integration Tests with Spring Boot and Testcontainers</title>
+      <link>http://localhost:1313/til/2025-10-02-true-integration-tests-with-spring-boot-and-testcontainers/</link>
+      <pubDate>Thu, 02 Oct 2025 23:50:10 +0000</pubDate>
+      <guid>http://localhost:1313/til/2025-10-02-true-integration-tests-with-spring-boot-and-testcontainers/</guid>
+      <description>&lt;p&gt;Today, I hit a big milestone in my &lt;em&gt;Fintrackr&lt;/em&gt; project: writing my first real integration test for the database layer. My goal was simple: how can I be 100% sure that my JPA repositories work with a &lt;em&gt;real&lt;/em&gt; PostgreSQL database, without any hassle?&lt;/p&gt;&#xA;&lt;p&gt;I explored a few ways to do this, and learned a lot about the pros and cons of each approach.&lt;/p&gt;&#xA;&lt;h3 id=&#34;option-1-the-simulator-an-in-memory-h2-database&#34;&gt;Option 1: The Simulator (An In-Memory H2 Database)&lt;/h3&gt;&#xA;&lt;p&gt;The first common approach is to use an in-memory database like H2. Spring Boot makes this very easy. We add the H2 dependency, and Spring Boot will automatically configure our tests to run against this fast, temporary database.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
