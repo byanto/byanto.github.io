@@ -3,7 +3,7 @@ title = "Simplifying Repository Tests with @DataJpaTest"
 slug = "simplify-repository-test-datajpatest"
 date = "2025-10-01T23:50:10.838Z"
 tag = ["spring boot", "testing", "datajpatest", "java"]
-draft = true
+draft = false
 +++
 
 ### Context

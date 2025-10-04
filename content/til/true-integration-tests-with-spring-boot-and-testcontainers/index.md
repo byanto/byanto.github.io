@@ -3,7 +3,7 @@ title = "True Integration Tests with Spring Boot and Testcontainers"
 slug = "integration-tests-spring-boot-testcontainers"
 date = "2025-10-02T23:50:10.838Z"
 tag = ["spring boot", "testing", "testcontainers", "datajpatest", "java"]
-draft = true
+draft = false
 +++
 
 ### Context
