@@ -45,8 +45,8 @@ enableGitInfo = true
 [params]
     defaultTheme = "auto"
     gitRepo = "https://github.com/byanto"
-    title = "Budi Yanto"
-    description = "Software Developer"
+    title = "Budi Yanto - Java Backend Developer | Spring Boot | TU Berlin Graduate"
+    description = "Software Engineer and Java Backend Developer with a Master's degree from TU Berlin."
 
     # Author config
     [params.author]
