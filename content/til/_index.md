@@ -1,6 +1,9 @@
 +++
-title = "Today I Learned (TIL)"
-type = "til"
+title   = "Today I Learned (TIL)"
+url     = "/til/"
+#type    = "posts"
+#type = "til"
 [cascade]
-  type = "posts"
+  _target = {kind = "page"}
+  type  = "posts"
 +++

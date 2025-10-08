@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en-us">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=48616&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>True Integration Tests with Spring Boot and Testcontainers - Budi Yanto</title><meta name="Description" content="Software Engineer and Java Backend Developer with a Master&#39;s degree from TU Berlin."><meta property="og:url" content="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/">
+        <title>True Integration Tests with Spring Boot and Testcontainers - Budi Yanto</title><meta name="Description" content="How I leveled up from H2 to Testcontainers for real PostgreSQL integration testing with Spring Boot 3.1 and @ServiceConnection."><meta property="og:url" content="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/">
   <meta property="og:site_name" content="Budi Yanto">
   <meta property="og:title" content="True Integration Tests with Spring Boot and Testcontainers">
-  <meta property="og:description" content="Context In my last TIL, I explored how @DataJpaTest helps simplify repository testing in Spring Boot. That approach was a huge improvement compared to running the full application context — it gave me lightweight, focused tests for my JPA repositories.
-But @DataJpaTest usually defaults to an in-memory H2 database, which isn’t always a perfect mirror of my production database (PostgreSQL). That works for quick feedback, but deep down, I didn’t feel comfortable. If I want to trust my backend logic, I need to see my queries working against a real PostgreSQL instance, not a simulator. A query that works on H2 might fail on a real PostgreSQL production database.">
+  <meta property="og:description" content="How I leveled up from H2 to Testcontainers for real PostgreSQL integration testing with Spring Boot 3.1 and @ServiceConnection.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="til">
-    <meta property="article:published_time" content="2025-10-02T23:50:10+00:00">
-    <meta property="article:modified_time" content="2025-10-04T15:19:28+07:00">
+    <meta property="article:published_time" content="2025-10-02T23:50:10+07:00">
+    <meta property="article:modified_time" content="2025-10-02T23:50:10+07:00">
+    <meta property="article:tag" content="Spring Boot">
+    <meta property="article:tag" content="Testing">
+    <meta property="article:tag" content="Testcontainers">
+    <meta property="article:tag" content="Datajpatest">
+    <meta property="article:tag" content="Java">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="True Integration Tests with Spring Boot and Testcontainers">
-  <meta name="twitter:description" content="Context In my last TIL, I explored how @DataJpaTest helps simplify repository testing in Spring Boot. That approach was a huge improvement compared to running the full application context — it gave me lightweight, focused tests for my JPA repositories.
-But @DataJpaTest usually defaults to an in-memory H2 database, which isn’t always a perfect mirror of my production database (PostgreSQL). That works for quick feedback, but deep down, I didn’t feel comfortable. If I want to trust my backend logic, I need to see my queries working against a real PostgreSQL instance, not a simulator. A query that works on H2 might fail on a real PostgreSQL production database.">
+  <meta name="twitter:description" content="How I leveled up from H2 to Testcontainers for real PostgreSQL integration testing with Spring Boot 3.1 and @ServiceConnection.">
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/" /><link rel="prev" href="http://localhost:1313/til/simplify-repository-test-datajpatest/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" /><link rel="prev" href="http://localhost:48616/til/simplify-repository-test-datajpatest/" /><link rel="next" href="http://localhost:48616/til/why-never-expose-jpa-entities/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -33,14 +36,14 @@ But @DataJpaTest usually defaults to an in-memory H2 database, which isn’t alw
         "inLanguage": "en-us",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/localhost:1313\/til\/integration-tests-spring-boot-testcontainers\/"
-        },"genre": "posts","wordcount":  796 ,
-        "url": "http:\/\/localhost:1313\/til\/integration-tests-spring-boot-testcontainers\/","datePublished": "2025-10-02T23:50:10+00:00","dateModified": "2025-10-04T15:19:28+07:00","publisher": {
+            "@id": "http:\/\/localhost:48616\/til\/integration-tests-spring-boot-testcontainers\/"
+        },"genre": "posts","keywords": "spring boot, testing, testcontainers, datajpatest, java","wordcount":  796 ,
+        "url": "http:\/\/localhost:48616\/til\/integration-tests-spring-boot-testcontainers\/","datePublished": "2025-10-02T23:50:10+07:00","dateModified": "2025-10-02T23:50:10+07:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "Budi Yanto"
-            },"description": ""
+            },"description": "How I leveled up from H2 to Testcontainers for real PostgreSQL integration testing with Spring Boot 3.1 and @ServiceConnection."
     }
     </script></head>
     <body data-header-desktop="fixed" data-header-mobile="auto"><script>
@@ -148,6 +151,7 @@ But @DataJpaTest usually defaults to an in-memory H2 database, which isn’t alw
 <li>Step 1: Use <code>@DataJpaTest</code> for quick, slice-level testing.</li>
 <li>Step 2: Add <code>Testcontainers</code> when you want to validate your repositories against the actual database technology.</li>
 </ul>
+<hr>
 <h3 id="problem">Problem</h3>
 <p>With <code>@DataJpaTest</code>, I felt confident in my repository logic — but I also knew there was a gap. H2 isn’t PostgreSQL. Subtle differences in data types, SQL functions, and query behavior could still trip me up.</p>
 <p>The first idea that comes to my mind was to run a dedicated PostgreSQL database for tests. This is more realistic since it’s the same tech as production. The problem was that it’s messy. Developers must install PostgreSQL locally, keep it running, and manage test data. The database isn’t automatically cleaned between runs, which leads to flaky tests.</p>
@@ -157,6 +161,7 @@ But @DataJpaTest usually defaults to an in-memory H2 database, which isn’t alw
 <li>Isolation (a clean DB every run).</li>
 <li>Automation (no manual setup).</li>
 </ul>
+<hr>
 <h3 id="solution">Solution</h3>
 <p><strong>How <code>Testcontainers</code> Fits with <code>@DataJpaTest</code></strong></p>
 <ul>
@@ -234,6 +239,7 @@ But @DataJpaTest usually defaults to an in-memory H2 database, which isn’t alw
 <li><code>@DataJpaTest</code> ensures only repository-related beans are loaded.</li>
 <li>Each test runs against a fresh, real PostgreSQL database.</li>
 </ol>
+<hr>
 <h3 id="key-takeaway">Key Takeaway</h3>
 <ul>
 <li>H2 is fast, but not realistic enough for production-grade testing.</li>
@@ -242,6 +248,7 @@ But @DataJpaTest usually defaults to an in-memory H2 database, which isn’t alw
 <li><code>@ServiceConnection</code> makes integration nearly effortless.</li>
 <li>Writing true integration tests can actually be clean and enjoyable.</li>
 </ul>
+<hr>
 <h3 id="reflection">Reflection</h3>
 <p>Looking back, I’m glad I first learned <code>@DataJpaTest</code>. It gave me a foundation: testing repositories in isolation without the noise of the whole Spring Boot context.</p>
 <p>But adding <code>Testcontainers</code> feels like the natural &ldquo;level-up&rdquo;. It answers the question I had after the first post: <em>&ldquo;What if my query passes on H2 but fails on Postgres?&rdquo;</em> Now I don’t have to wonder.</p>
@@ -250,25 +257,25 @@ But @DataJpaTest usually defaults to an in-memory H2 database, which isn’t alw
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2025-10-04&nbsp;<a class="git-hash" href="https://github.com/byanto/commit/b0706f2aedca5cf2498e665d77645e6da7e6c65e" target="_blank" title="commit by Budi Yanto(budiyanto@live.com) b0706f2aedca5cf2498e665d77645e6da7e6c65e: Set draft to false">
-                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>b0706f2</a></span>
+                <span>Updated on 2025-10-02</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers" data-description=""><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2ftil%2fintegration-tests-spring-boot-testcontainers%2f&amp;text=True%20Integration%20Tests%20with%20Spring%20Boot%20and%20Testcontainers" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers" data-hashtags="spring boot,testing,testcontainers,datajpatest,java"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" data-hashtag="spring boot"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" data-title="True Integration Tests with Spring Boot and Testcontainers" data-description="How I leveled up from H2 to Testcontainers for real PostgreSQL integration testing with Spring Boot 3.1 and @ServiceConnection."><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a48616%2ftil%2fintegration-tests-spring-boot-testcontainers%2f&amp;text=True%20Integration%20Tests%20with%20Spring%20Boot%20and%20Testcontainers" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/spring-boot/">Spring Boot</a>,&nbsp;<a href="/tags/testing/">Testing</a>,&nbsp;<a href="/tags/testcontainers/">Testcontainers</a>,&nbsp;<a href="/tags/datajpatest/">Datajpatest</a>,&nbsp;<a href="/tags/java/">Java</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/til/simplify-repository-test-datajpatest/" class="prev" rel="prev" title="Simplifying Repository Tests with @DataJpaTest"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Simplifying Repository Tests with @DataJpaTest</a></div>
+    <div class="post-nav"><a href="/til/simplify-repository-test-datajpatest/" class="prev" rel="prev" title="Simplifying Repository Tests with @DataJpaTest"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Simplifying Repository Tests with @DataJpaTest</a>
+            <a href="/til/why-never-expose-jpa-entities/" class="next" rel="next" title="Why I Never Expose JPA Entities in My APIs Anymore">Why I Never Expose JPA Entities in My APIs Anymore<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">

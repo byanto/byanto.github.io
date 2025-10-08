@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>All Posts - Budi Yanto</title>
-        <link>http://localhost:1313/posts/</link>
+        <link>http://localhost:48616/posts/</link>
         <description>All Posts | Budi Yanto</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 01 Oct 2025 12:08:44 &#43;0700</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 01 Oct 2025 12:08:44 &#43;0700</lastBuildDate><atom:link href="http://localhost:48616/posts/" rel="self" type="application/rss+xml" /><item>
     <title>My Journey: From Developer to Entrepeneur and Back Again</title>
-    <link>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</link>
+    <link>http://localhost:48616/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</link>
     <pubDate>Wed, 01 Oct 2025 12:08:44 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</guid>
+    <guid>http://localhost:48616/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</guid>
     <description><![CDATA[<h2 id="a-new-chapter">A New Chapter</h2>
 <p>If you look at my LinkedIn profile, you might have a few questions. A Master&rsquo;s in Computer Science from TU Berlin, a job as a Java developer, and then&hellip; a sudden shift in 2017 to run an e-commerce company in Indonesia for eight years. It&rsquo;s not exactly a straight line.</p>
 <p>I&rsquo;m writing this because I&rsquo;m starting a new chapter. For a while, I&rsquo;ve been thinking about what comes next. After building a successful business from the ground up, I&rsquo;ve realized what I miss most is the craft of building software. So, I&rsquo;m returning to my roots as a hands-on backend developer. This blog is where I plan to document that journey.</p>]]></description>

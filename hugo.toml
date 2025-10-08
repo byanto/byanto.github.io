@@ -80,7 +80,7 @@ enableGitInfo = true
             enable = true
             avatarURL = "/images/avatar.png"
             title = ""
-            subtitle = "Software Developer"
+            subtitle = "Software Engineer"
             typeit = true
             social = true
         [params.home.posts]
@@ -90,3 +90,4 @@ enableGitInfo = true
     [params.social]
         GitHub = "byanto"
         Linkedin = "byanto"
+        

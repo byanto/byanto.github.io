@@ -1,0 +1,103 @@
+/* ---------- TIL section list layout (only /til/) ---------- */
+.section-til .archive-item {
+  display: grid;
+  grid-template-columns: 1fr auto;         /* title | date */
+  grid-template-areas:
+    "title date"
+    "summary date";
+  column-gap: 1rem;
+  align-items: start;
+  padding: .25rem 0 .75rem;
+  border-bottom: 0;                         /* keep LoveIt's minimal look */
+}
+
+/* Title link */
+.section-til .archive-item-link {
+  grid-area: title;
+  display: inline-block;
+  max-width: 100%;
+  white-space: normal;                      /* allow wrapping */
+}
+
+/* Date on the right, aligned with top */
+.section-til .archive-item-date {
+  grid-area: date;
+  margin-left: 1rem;
+  color: var(--color-secondary);
+  opacity: .65;
+  white-space: nowrap;
+  align-self: start;
+}
+
+/* Summary under the title, nice readable width */
+.section-til .archive-item-summary {
+  grid-area: summary;
+  margin-top: .3rem;
+  max-width: 70ch;
+  color: var(--card-text-color-secondary, rgba(0,0,0,.68));
+  line-height: 1.55;
+  font-size: .96rem;
+}
+.section-til .archive-item-summary p {
+  margin: 0;                                /* remove extra gaps */
+}
+
+/* Group title spacing (optional, tighter list) */
+.section-til .group-title {
+  margin: 1.1rem 0 .4rem;
+}
+
+/* Hover polish
+.section-til .archive-item-link {
+  text-decoration: none;
+  transition: transform .12s ease, text-decoration-color .12s ease, color .12s ease;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.section-til .archive-item-link:hover {
+  text-decoration: underline;
+  transform: translateY(-1px);
+}
+*/
+
+/* TIL badge */
+.section-til .til-badge {
+  display: inline-block;
+  margin-right: .5rem;
+  padding: .1rem .4rem;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  border-radius: .35rem;
+  background: var(--card-border-color, rgba(0,0,0,.08));
+  color: var(--color-secondary);
+  vertical-align: baseline;
+  transform: translateY(-1px);
+}
+
+/* Slight badge glow on hover (nice but subtle) */
+.section-til .archive-item-link:hover .til-badge {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-secondary) 18%, transparent);
+}
+
+.section-til .archive-item { row-gap: .15rem; }
+.section-til .archive-item-link { line-height: 1.25; }
+.section-til .archive-item-summary { line-height: 1.55; font-size: .95rem; }
+.section-til .group-title { margin: 1.2rem 0 .55rem; }
+
+
+/* ---------- Mobile: stack gracefully ---------- */
+@media (max-width: 640px) {
+  .section-til .archive-item {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "summary"
+      "date";
+    row-gap: .15rem;
+  }
+  .section-til .archive-item-date {
+    margin-left: 0;
+    opacity: .6;
+  }
+}

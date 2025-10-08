@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Best Practices - Tag - Budi Yanto</title>
+        <link>http://localhost:48616/tags/best-practices/</link>
+        <description>Best Practices - Tag - Budi Yanto</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</lastBuildDate><atom:link href="http://localhost:48616/tags/best-practices/" rel="self" type="application/rss+xml" /><item>
+    <title>Why I Never Expose JPA Entities in My APIs Anymore</title>
+    <link>http://localhost:48616/til/why-never-expose-jpa-entities/</link>
+    <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:48616/til/why-never-expose-jpa-entities/</guid>
+    <description><![CDATA[Why exposing entities directly is risky and how DTOs protect your API design.]]></description>
+</item>
+</channel>
+</rss>

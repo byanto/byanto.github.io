@@ -1,35 +1,40 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Budi Yanto</title>
-        <link>http://localhost:1313/</link>
+        <link>http://localhost:48616/</link>
         <description>Software Engineer and Java Backend Developer with a Master&#39;s degree from TU Berlin.</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 02 Oct 2025 23:50:10 &#43;0000</lastBuildDate>
-            <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</lastBuildDate>
+            <atom:link href="http://localhost:48616/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>True Integration Tests with Spring Boot and Testcontainers</title>
-    <link>http://localhost:1313/til/integration-tests-spring-boot-testcontainers/</link>
-    <pubDate>Thu, 02 Oct 2025 23:50:10 &#43;0000</pubDate>
+    <title>Why I Never Expose JPA Entities in My APIs Anymore</title>
+    <link>http://localhost:48616/til/why-never-expose-jpa-entities/</link>
+    <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:1313/til/integration-tests-spring-boot-testcontainers/</guid>
-    <description><![CDATA[<h3 id="context">Context</h3>
-<p>In my last TIL, I explored how <code>@DataJpaTest</code> helps simplify repository testing in Spring Boot. That approach was a huge improvement compared to running the full application context — it gave me lightweight, focused tests for my JPA repositories.</p>
-<p>But <code>@DataJpaTest</code> usually defaults to an in-memory H2 database, which isn’t always a perfect mirror of my production database (PostgreSQL). That works for quick feedback, but deep down, I didn’t feel comfortable. If I want to trust my backend logic, I need to see my queries working against a real PostgreSQL instance, not a simulator. A query that works on H2 might fail on a real PostgreSQL production database.</p>]]></description>
+    <guid>http://localhost:48616/til/why-never-expose-jpa-entities/</guid>
+    <description><![CDATA[Why exposing entities directly is risky and how DTOs protect your API design.]]></description>
+</item>
+<item>
+    <title>True Integration Tests with Spring Boot and Testcontainers</title>
+    <link>http://localhost:48616/til/integration-tests-spring-boot-testcontainers/</link>
+    <pubDate>Thu, 02 Oct 2025 23:50:10 &#43;0700</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:48616/til/integration-tests-spring-boot-testcontainers/</guid>
+    <description><![CDATA[Running true PostgreSQL integration tests with Spring Boot and Testcontainers.]]></description>
 </item>
 <item>
     <title>Simplifying Repository Tests with @DataJpaTest</title>
-    <link>http://localhost:1313/til/simplify-repository-test-datajpatest/</link>
-    <pubDate>Wed, 01 Oct 2025 23:50:10 &#43;0000</pubDate>
+    <link>http://localhost:48616/til/simplify-repository-test-datajpatest/</link>
+    <pubDate>Wed, 01 Oct 2025 23:50:10 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:1313/til/simplify-repository-test-datajpatest/</guid>
-    <description><![CDATA[<h3 id="context">Context</h3>
-<p>While building <strong>Fintrackr</strong>, I reached the point where I needed to test my repository layer. Up to this point, I had been using <code>@SpringBootTest</code> for everything because it seemed like the default choice. But I quickly noticed that my tests were taking longer to run than expected, and they were starting up a lot more than I actually needed. It makes me started to think: <em>Do I really need to spin up the whole Spring Boot application just to test a repository?</em> That felt too heavy.</p>]]></description>
+    <guid>http://localhost:48616/til/simplify-repository-test-datajpatest/</guid>
+    <description><![CDATA[Using @DataJpaTest to isolate and speed up JPA repository testing.]]></description>
 </item>
 <item>
     <title>My Journey: From Developer to Entrepeneur and Back Again</title>
-    <link>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</link>
+    <link>http://localhost:48616/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</link>
     <pubDate>Wed, 01 Oct 2025 12:08:44 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</guid>
+    <guid>http://localhost:48616/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</guid>
     <description><![CDATA[<h2 id="a-new-chapter">A New Chapter</h2>
 <p>If you look at my LinkedIn profile, you might have a few questions. A Master&rsquo;s in Computer Science from TU Berlin, a job as a Java developer, and then&hellip; a sudden shift in 2017 to run an e-commerce company in Indonesia for eight years. It&rsquo;s not exactly a straight line.</p>
 <p>I&rsquo;m writing this because I&rsquo;m starting a new chapter. For a while, I&rsquo;ve been thinking about what comes next. After building a successful business from the ground up, I&rsquo;ve realized what I miss most is the craft of building software. So, I&rsquo;m returning to my roots as a hands-on backend developer. This blog is where I plan to document that journey.</p>]]></description>

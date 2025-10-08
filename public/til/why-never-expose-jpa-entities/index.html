@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=48616&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Why I Never Expose JPA Entities in My APIs Anymore - Budi Yanto</title><meta name="Description" content="How I learned that using DTOs instead of JPA entities keeps APIs safe, clean, and decoupled from the database."><meta property="og:url" content="http://localhost:48616/til/why-never-expose-jpa-entities/">
+  <meta property="og:site_name" content="Budi Yanto">
+  <meta property="og:title" content="Why I Never Expose JPA Entities in My APIs Anymore">
+  <meta property="og:description" content="How I learned that using DTOs instead of JPA entities keeps APIs safe, clean, and decoupled from the database.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="til">
+    <meta property="article:published_time" content="2025-10-07T10:50:10+07:00">
+    <meta property="article:modified_time" content="2025-10-07T10:50:10+07:00">
+    <meta property="article:tag" content="Spring Boot">
+    <meta property="article:tag" content="Testing">
+    <meta property="article:tag" content="Dto">
+    <meta property="article:tag" content="Architecture">
+    <meta property="article:tag" content="Best Practices">
+    <meta property="article:tag" content="Java">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Why I Never Expose JPA Entities in My APIs Anymore">
+  <meta name="twitter:description" content="How I learned that using DTOs instead of JPA entities keeps APIs safe, clean, and decoupled from the database.">
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:48616/til/why-never-expose-jpa-entities/" /><link rel="prev" href="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Why I Never Expose JPA Entities in My APIs Anymore",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:48616\/til\/why-never-expose-jpa-entities\/"
+        },"genre": "posts","keywords": "spring boot, testing, dto, architecture, best practices, java","wordcount":  794 ,
+        "url": "http:\/\/localhost:48616\/til\/why-never-expose-jpa-entities\/","datePublished": "2025-10-07T10:50:10+07:00","dateModified": "2025-10-07T10:50:10+07:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Budi Yanto"
+            },"description": "How I learned that using DTOs instead of JPA entities keeps APIs safe, clean, and decoupled from the database."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Budi Yanto">Home</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/til/"> TIL </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/byanto" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Budi Yanto">Home</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/til/" title="">TIL</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/byanto" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Why I Never Expose JPA Entities in My APIs Anymore</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Budi Yanto</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-10-07">2025-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;794 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#context">Context</a></li>
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#analogy-the-restaurant-menu-vs-the-kitchen-recipe">Analogy: The Restaurant Menu vs. The Kitchen Recipe</a></li>
+        <li><a href="#visualization-how-data-moves-between-layers">Visualization: How data moves between layers</a></li>
+        <li><a href="#key-takeaways">Key Takeaways</a></li>
+        <li><a href="#reflection">Reflection</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h3 id="context">Context</h3>
+<p>While working on <code>Fintrackr</code>, I reached the point where my backend needed to return JSON responses from the database. I had my entities — <code>Transaction</code>, <code>Portfolio</code>, and <code>Stock</code> — ready to go, and it was tempting to just return them directly from the controller.</p>
+<p>But as I started to think about API design, I realized this approach could easily backfire. I kept seeing the same advice in blogs and code reviews:</p>
+<blockquote>
+<p>“Don’t expose your JPA entities directly — use DTOs.”</p></blockquote>
+<p>At first, it felt unnecessary. Why introduce another layer when I could just return what’s already there? But once I understood the <strong>why</strong>, it made total sense.</p>
+<hr>
+<h3 id="problem">Problem</h3>
+<p>Using JPA entities directly in APIs tightly couples your internal database model to your external API contract. That sounds harmless until you start making changes — or until sensitive data slips through by accident.</p>
+<p>It’s one of those invisible problems that doesn’t hurt until it suddenly does.</p>
+<p>Let’s break it down.</p>
+<h4 id="1-security-risks">1. Security Risks</h4>
+<p>JPA entities are direct mirrors of your database tables. They often include fields that you’d never want to expose publicly — but returning entities directly makes that mistake easy.</p>
+<p><strong>Example:</strong></p>
+<p>Imagine a <code>User</code> entity like this:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Entity</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">passwordHash</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<p>If your controller returns the <code>User</code> entity directly:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/users/{id}&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">userRepository</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="na">orElseThrow</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<p>Your API response will include the <code>passwordHash</code> field by default. Even though it’s hashed, you’ve just leaked something that should never leave your backend.</p>
+<p>A <code>UserDTO</code>, on the other hand, defines only the safe data:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">record</span> <span class="nc">UserDTO</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span></span></span></code></pre></div></div>
+<p>and you return that instead:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/users/{id}&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">UserDTO</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userRepository</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="na">orElseThrow</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserDTO</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getId</span><span class="p">(),</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="na">getUsername</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<p>The DTO acts as a <strong>protective barrier</strong>, making sure only intentional data crosses the boundary.</p>
+<h4 id="2-maintenance-and-flexibility">2. Maintenance and Flexibility</h4>
+<p>Your database schema and your API will evolve in different ways:</p>
+<ul>
+<li>Your <strong>database</strong> changes based on internal design choices.</li>
+<li>Your <strong>API</strong> changes based on what frontend clients need.</li>
+</ul>
+<p>When you expose entities directly, those two layers become inseparable and that’s dangerous.</p>
+<p><strong>Example:</strong></p>
+<p>Suppose you rename <code>Portfolio.name</code> to <code>Portfolio.portfolioName</code>.
+If you’ve been returning the entity directly, every frontend consuming <code>/api/portfolios</code> will break overnight.</p>
+<p>With a <code>DTO</code>, though, your external API stays stable:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">record</span> <span class="nc">PortfolioResponse</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">PortfolioResponse</span><span class="w"> </span><span class="nf">fromEntity</span><span class="p">(</span><span class="n">Portfolio</span><span class="w"> </span><span class="n">portfolio</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PortfolioResponse</span><span class="p">(</span><span class="n">portfolio</span><span class="p">.</span><span class="na">getId</span><span class="p">(),</span><span class="w"> </span><span class="n">portfolio</span><span class="p">.</span><span class="na">getPortfolioName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<p>Now you can safely refactor your database schema without touching client code, just adjust the mapping logic once.</p>
+<p>DTOs give your backend freedom to evolve internally while keeping your API stable externally.</p>
+<h4 id="3-different-data-shapes">3. Different Data Shapes</h4>
+<p>Real-world APIs rarely map one-to-one with database tables.
+For example, Fintrackr’s frontend might need a combined view of portfolio data and its total market value — something that doesn’t exist as a single entity.</p>
+<p>That’s where DTOs shine. You can easily build composite responses:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">record</span> <span class="nc">PortfolioSummaryDTO</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">portfolioName</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">BigDecimal</span><span class="w"> </span><span class="n">totalValue</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">stockCount</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span><span class="p">{}</span></span></span></code></pre></div></div>
+<p>DTOs let you shape data for specific use cases without polluting your domain model.</p>
+<hr>
+<h3 id="analogy-the-restaurant-menu-vs-the-kitchen-recipe">Analogy: The Restaurant Menu vs. The Kitchen Recipe</h3>
+<p>I like to think of it this way:</p>
+<ul>
+<li>
+<p><strong>Entity = Kitchen Recipe</strong><br>
+Full of details, measurements, and internal steps only the chefs (backend) need.</p>
+</li>
+<li>
+<p><strong>DTO = Restaurant Menu</strong><br>
+Clean, simple, and only shows what the customer (frontend) should see.</p>
+</li>
+</ul>
+<p>You’d never hand your customers a messy kitchen recipe with all your secrets, just like you shouldn’t expose your JPA entities directly through a public API.</p>
+<hr>
+<h3 id="visualization-how-data-moves-between-layers">Visualization: How data moves between layers</h3>
+<p>The diagram below shows how data moves between layers in a typical Spring Boot backend. It highlights how DTOs act as the translator between internal entities and external API responses.</p>
+<p><div class="mermaid" id="id-1"></div>
+<em>Figure 1: The flow of data through the layers — the Service acts as the bridge between Entity and DTO, ensuring the Controller and Client never touch Entities directly.</em></p>
+<hr>
+<h3 id="key-takeaways">Key Takeaways</h3>
+<ul>
+<li>JPA entities mirror your internal database, they’re not meant to be public.</li>
+<li>DTOs protect sensitive data and define a clear, stable API contract.</li>
+<li>They allow your database schema to evolve without breaking clients.</li>
+<li>You can tailor DTOs to match frontend needs, not database tables.</li>
+<li>Think of DTOs as your “menu” and entities as your “kitchen recipes.”</li>
+</ul>
+<hr>
+<h3 id="reflection">Reflection</h3>
+<p>This concept clicked for me while building Fintrackr’s first API endpoints. It felt redundant at first, but once I saw how DTOs keep my code flexible and secure, it became a no-brainer.</p>
+<p>As my project grows — more modules, more endpoints, more data — this separation will pay off massively. DTOs aren’t just a best practice; they’re an investment in <strong>maintainability</strong> and <strong>safety</strong>.</p>
+<p>In hindsight, this was a turning point for me: moving from <strong>“just making things work”</strong> to thinking like an engineer who designs for the future.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-10-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:48616/til/why-never-expose-jpa-entities/" data-title="Why I Never Expose JPA Entities in My APIs Anymore" data-hashtags="spring boot,testing,dto,architecture,best practices,java"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:48616/til/why-never-expose-jpa-entities/" data-title="Why I Never Expose JPA Entities in My APIs Anymore"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:48616/til/why-never-expose-jpa-entities/" data-hashtag="spring boot"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:48616/til/why-never-expose-jpa-entities/" data-title="Why I Never Expose JPA Entities in My APIs Anymore"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:48616/til/why-never-expose-jpa-entities/" data-title="Why I Never Expose JPA Entities in My APIs Anymore"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:48616/til/why-never-expose-jpa-entities/" data-title="Why I Never Expose JPA Entities in My APIs Anymore"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:48616/til/why-never-expose-jpa-entities/" data-title="Why I Never Expose JPA Entities in My APIs Anymore" data-description="How I learned that using DTOs instead of JPA entities keeps APIs safe, clean, and decoupled from the database."><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a48616%2ftil%2fwhy-never-expose-jpa-entities%2f&amp;text=Why%20I%20Never%20Expose%20JPA%20Entities%20in%20My%20APIs%20Anymore" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/spring-boot/">Spring Boot</a>,&nbsp;<a href="/tags/testing/">Testing</a>,&nbsp;<a href="/tags/dto/">Dto</a>,&nbsp;<a href="/tags/architecture/">Architecture</a>,&nbsp;<a href="/tags/best-practices/">Best Practices</a>,&nbsp;<a href="/tags/java/">Java</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/til/integration-tests-spring-boot-testcontainers/" class="prev" rel="prev" title="True Integration Tests with Spring Boot and Testcontainers"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>True Integration Tests with Spring Boot and Testcontainers</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Budi Yanto</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/algoliasearch/lite/browser.umd.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/mermaid/mermaid.min.js"></script><script>window.config={"comment":{},"data":{"id-1":"\r\n\r\nflowchart LR\r\n    %% ====== LAYERS ======\r\n    subgraph CLIENT[\"Client Layer\"]\r\n        U[\"Client / Frontend\"]\r\n    end\r\n\r\n    subgraph CONTROLLER[\"Controller Layer\"]\r\n        C[\"Spring REST Controller\"]\r\n    end\r\n\r\n    subgraph SERVICE[\"Service Layer\"]\r\n        S[\"Service Class\"]\r\n    end\r\n\r\n    subgraph DATA[\"Data Layer\"]\r\n        E[(\"JPA Entity\")]\r\n        R[\"Repository\"]\r\n    end\r\n\r\n    %% ====== DATA FLOW ======\r\n    U --\u003e|\"HTTP Request (JSON DTO)\"| C\r\n    C --\u003e|\"Calls Service with DTO Request\"| S\r\n    S --\u003e|\"Uses Repository to fetch/store Entities\"| R\r\n    R --\u003e|\"Returns Entity objects\"| S\r\n    S --\u003e|\"Returns DTO Response\"| C\r\n    C --\u003e|\"HTTP Response (JSON DTO)\"| U\r\n\r\n    %% Mapping indicator\r\n    S \u003c-.-\u003e|\"Maps DTO ↔ Entity\"| D[\"DTO \u003c--\u003e Entity Mapper\"]\r\n\r\n    %% ====== STYLE (Adaptive to theme) ======\r\n    %% These colors work well in both modes\r\n    classDef client fill:#cfe2ff,stroke:#6ea8fe,color:#052c65;\r\n    classDef controller fill:#d1e7dd,stroke:#75b798,color:#0f5132;\r\n    classDef service fill:#fff3cd,stroke:#ffecb5,color:#664d03;\r\n    classDef data fill:#f8d7da,stroke:#f5c2c7,color:#58151c;\r\n    classDef mapper fill:#fff9c4,stroke:#fdd835,color:#7a5e00;\r\n\r\n    class U client;\r\n    class C controller;\r\n    class S service;\r\n    class R data;\r\n    class E data;\r\n    class D mapper;\r\n\r"},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script src="/js/theme.min.js"></script></body>
+</html>
