@@ -1,40 +1,50 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Budi Yanto</title>
-        <link>http://localhost:48616/</link>
+        <link>http://localhost:1313/</link>
         <description>Software Engineer and Java Backend Developer with a Master&#39;s degree from TU Berlin.</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</lastBuildDate>
-            <atom:link href="http://localhost:48616/index.xml" rel="self" type="application/rss+xml" />
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 &#43;0000</lastBuildDate>
+            <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>The Test Naming Pattern That Turned My Tests Into Stories</title>
+    <link>http://localhost:1313/til/test-naming-pattern-turned-tests-into-stories/</link>
+    <pubDate>Thu, 16 Oct 2025 00:00:00 &#43;0000</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/til/test-naming-pattern-turned-tests-into-stories/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/cover.png" referrerpolicy="no-referrer">
+            </div>A simple test naming convention that makes your tests self-explanatory and instantly understandable — even without reading the code.]]></description>
+</item>
+<item>
     <title>Why I Never Expose JPA Entities in My APIs Anymore</title>
-    <link>http://localhost:48616/til/why-never-expose-jpa-entities/</link>
+    <link>http://localhost:1313/til/why-never-expose-jpa-entities/</link>
     <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:48616/til/why-never-expose-jpa-entities/</guid>
+    <guid>http://localhost:1313/til/why-never-expose-jpa-entities/</guid>
     <description><![CDATA[Why exposing entities directly is risky and how DTOs protect your API design.]]></description>
 </item>
 <item>
     <title>True Integration Tests with Spring Boot and Testcontainers</title>
-    <link>http://localhost:48616/til/integration-tests-spring-boot-testcontainers/</link>
+    <link>http://localhost:1313/til/integration-tests-spring-boot-testcontainers/</link>
     <pubDate>Thu, 02 Oct 2025 23:50:10 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:48616/til/integration-tests-spring-boot-testcontainers/</guid>
+    <guid>http://localhost:1313/til/integration-tests-spring-boot-testcontainers/</guid>
     <description><![CDATA[Running true PostgreSQL integration tests with Spring Boot and Testcontainers.]]></description>
 </item>
 <item>
     <title>Simplifying Repository Tests with @DataJpaTest</title>
-    <link>http://localhost:48616/til/simplify-repository-test-datajpatest/</link>
+    <link>http://localhost:1313/til/simplify-repository-test-datajpatest/</link>
     <pubDate>Wed, 01 Oct 2025 23:50:10 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:48616/til/simplify-repository-test-datajpatest/</guid>
+    <guid>http://localhost:1313/til/simplify-repository-test-datajpatest/</guid>
     <description><![CDATA[Using @DataJpaTest to isolate and speed up JPA repository testing.]]></description>
 </item>
 <item>
     <title>My Journey: From Developer to Entrepeneur and Back Again</title>
-    <link>http://localhost:48616/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</link>
+    <link>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</link>
     <pubDate>Wed, 01 Oct 2025 12:08:44 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:48616/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</guid>
+    <guid>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</guid>
     <description><![CDATA[<h2 id="a-new-chapter">A New Chapter</h2>
 <p>If you look at my LinkedIn profile, you might have a few questions. A Master&rsquo;s in Computer Science from TU Berlin, a job as a Java developer, and then&hellip; a sudden shift in 2017 to run an e-commerce company in Indonesia for eight years. It&rsquo;s not exactly a straight line.</p>
 <p>I&rsquo;m writing this because I&rsquo;m starting a new chapter. For a while, I&rsquo;ve been thinking about what comes next. After building a successful business from the ground up, I&rsquo;ve realized what I miss most is the craft of building software. So, I&rsquo;m returning to my roots as a hands-on backend developer. This blog is where I plan to document that journey.</p>]]></description>

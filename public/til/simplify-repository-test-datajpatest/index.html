@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en-us">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=48616&amp;path=livereload" data-no-instant defer></script>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Simplifying Repository Tests with @DataJpaTest - Budi Yanto</title><meta name="Description" content="How I discovered @DataJpaTest and learned to write lightweight repository tests without spinning up the full Spring Boot context."><meta property="og:url" content="http://localhost:48616/til/simplify-repository-test-datajpatest/">
+        <title>Simplifying Repository Tests with @DataJpaTest - Budi Yanto</title><meta name="Description" content="How I discovered @DataJpaTest and learned to write lightweight repository tests without spinning up the full Spring Boot context."><meta property="og:url" content="http://localhost:1313/til/simplify-repository-test-datajpatest/">
   <meta property="og:site_name" content="Budi Yanto">
   <meta property="og:title" content="Simplifying Repository Tests with @DataJpaTest">
   <meta property="og:description" content="How I discovered @DataJpaTest and learned to write lightweight repository tests without spinning up the full Spring Boot context.">
@@ -12,7 +12,7 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="til">
     <meta property="article:published_time" content="2025-10-01T23:50:10+07:00">
-    <meta property="article:modified_time" content="2025-10-01T23:50:10+07:00">
+    <meta property="article:modified_time" content="2025-10-08T16:00:48+07:00">
     <meta property="article:tag" content="Spring Boot">
     <meta property="article:tag" content="Testing">
     <meta property="article:tag" content="Datajpatest">
@@ -25,7 +25,7 @@
 <meta name="apple-mobile-web-app-title" content="My cool site">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:48616/til/simplify-repository-test-datajpatest/" /><link rel="next" href="http://localhost:48616/til/integration-tests-spring-boot-testcontainers/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/til/simplify-repository-test-datajpatest/" /><link rel="next" href="http://localhost:1313/til/integration-tests-spring-boot-testcontainers/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -35,9 +35,9 @@
         "inLanguage": "en-us",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/localhost:48616\/til\/simplify-repository-test-datajpatest\/"
+            "@id": "http:\/\/localhost:1313\/til\/simplify-repository-test-datajpatest\/"
         },"genre": "posts","keywords": "spring boot, testing, datajpatest, java","wordcount":  567 ,
-        "url": "http:\/\/localhost:48616\/til\/simplify-repository-test-datajpatest\/","datePublished": "2025-10-01T23:50:10+07:00","dateModified": "2025-10-01T23:50:10+07:00","publisher": {
+        "url": "http:\/\/localhost:1313\/til\/simplify-repository-test-datajpatest\/","datePublished": "2025-10-01T23:50:10+07:00","dateModified": "2025-10-08T16:00:48+07:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -206,12 +206,13 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2025-10-01</span>
+                <span>Updated on 2025-10-08&nbsp;<a class="git-hash" href="https://github.com/byanto/commit/ff0770612bc6c570eb611d1d7b51a00c84e64cd8" target="_blank" title="commit by Budi Yanto(budiyanto@live.com) ff0770612bc6c570eb611d1d7b51a00c84e64cd8: add TIL post: Why I Never Expose JPA Entities in My APIs Anymore">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>ff07706</a></span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:48616/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest" data-hashtags="spring boot,testing,datajpatest,java"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:48616/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:48616/til/simplify-repository-test-datajpatest/" data-hashtag="spring boot"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:48616/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:48616/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:48616/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:48616/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest" data-description="How I discovered @DataJpaTest and learned to write lightweight repository tests without spinning up the full Spring Boot context."><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a48616%2ftil%2fsimplify-repository-test-datajpatest%2f&amp;text=Simplifying%20Repository%20Tests%20with%20%40DataJpaTest" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest" data-hashtags="spring boot,testing,datajpatest,java"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/til/simplify-repository-test-datajpatest/" data-hashtag="spring boot"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/til/simplify-repository-test-datajpatest/" data-title="Simplifying Repository Tests with @DataJpaTest" data-description="How I discovered @DataJpaTest and learned to write lightweight repository tests without spinning up the full Spring Boot context."><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2ftil%2fsimplify-repository-test-datajpatest%2f&amp;text=Simplifying%20Repository%20Tests%20with%20%40DataJpaTest" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>

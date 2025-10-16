@@ -1,70 +1,86 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Tags - Tag - Budi Yanto</title>
-        <link>http://localhost:48616/tags/</link>
+        <link>http://localhost:1313/tags/</link>
         <description>Tags - Tag - Budi Yanto</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</lastBuildDate><atom:link href="http://localhost:48616/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>Architecture</title>
-    <link>http://localhost:48616/tags/architecture/</link>
-    <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
-    <author>Budi Yanto</author>
-    <guid>http://localhost:48616/tags/architecture/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Best Practices</title>
-    <link>http://localhost:48616/tags/best-practices/</link>
-    <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
-    <author>Budi Yanto</author>
-    <guid>http://localhost:48616/tags/best-practices/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Dto</title>
-    <link>http://localhost:48616/tags/dto/</link>
-    <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
-    <author>Budi Yanto</author>
-    <guid>http://localhost:48616/tags/dto/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/" rel="self" type="application/rss+xml" /><item>
     <title>Java</title>
-    <link>http://localhost:48616/tags/java/</link>
-    <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
+    <link>http://localhost:1313/tags/java/</link>
+    <pubDate>Thu, 16 Oct 2025 00:00:00 &#43;0000</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:48616/tags/java/</guid>
+    <guid>http://localhost:1313/tags/java/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Naming Convention</title>
+    <link>http://localhost:1313/tags/naming-convention/</link>
+    <pubDate>Thu, 16 Oct 2025 00:00:00 &#43;0000</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/tags/naming-convention/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Spring</title>
+    <link>http://localhost:1313/tags/spring/</link>
+    <pubDate>Thu, 16 Oct 2025 00:00:00 &#43;0000</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/tags/spring/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Spring Boot</title>
-    <link>http://localhost:48616/tags/spring-boot/</link>
-    <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
+    <link>http://localhost:1313/tags/spring-boot/</link>
+    <pubDate>Thu, 16 Oct 2025 00:00:00 &#43;0000</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:48616/tags/spring-boot/</guid>
+    <guid>http://localhost:1313/tags/spring-boot/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Tdd</title>
+    <link>http://localhost:1313/tags/tdd/</link>
+    <pubDate>Thu, 16 Oct 2025 00:00:00 &#43;0000</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/tags/tdd/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Testing</title>
-    <link>http://localhost:48616/tags/testing/</link>
+    <link>http://localhost:1313/tags/testing/</link>
+    <pubDate>Thu, 16 Oct 2025 00:00:00 &#43;0000</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/tags/testing/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Architecture</title>
+    <link>http://localhost:1313/tags/architecture/</link>
     <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:48616/tags/testing/</guid>
+    <guid>http://localhost:1313/tags/architecture/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Best Practices</title>
+    <link>http://localhost:1313/tags/best-practices/</link>
+    <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/tags/best-practices/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Dto</title>
+    <link>http://localhost:1313/tags/dto/</link>
+    <pubDate>Tue, 07 Oct 2025 10:50:10 &#43;0700</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/tags/dto/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Datajpatest</title>
-    <link>http://localhost:48616/tags/datajpatest/</link>
+    <link>http://localhost:1313/tags/datajpatest/</link>
     <pubDate>Thu, 02 Oct 2025 23:50:10 &#43;0700</pubDate>
     <author>Budi Yanto</author>
-    <guid>http://localhost:48616/tags/datajpatest/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Testcontainers</title>
-    <link>http://localhost:48616/tags/testcontainers/</link>
-    <pubDate>Thu, 02 Oct 2025 23:50:10 &#43;0700</pubDate>
-    <author>Budi Yanto</author>
-    <guid>http://localhost:48616/tags/testcontainers/</guid>
+    <guid>http://localhost:1313/tags/datajpatest/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

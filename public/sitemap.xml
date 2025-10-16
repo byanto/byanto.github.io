@@ -2,21 +2,25 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://localhost:48616/tags/architecture/</loc><lastmod>2025-10-07T10:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/tags/best-practices/</loc><lastmod>2025-10-07T10:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/</loc><lastmod>2025-10-07T10:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/tags/dto/</loc><lastmod>2025-10-07T10:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/tags/java/</loc><lastmod>2025-10-07T10:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/tags/spring-boot/</loc><lastmod>2025-10-07T10:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/tags/</loc><lastmod>2025-10-07T10:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/tags/testing/</loc><lastmod>2025-10-07T10:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/til/why-never-expose-jpa-entities/</loc><lastmod>2025-10-07T10:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/tags/datajpatest/</loc><lastmod>2025-10-02T23:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/tags/testcontainers/</loc><lastmod>2025-10-02T23:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/til/integration-tests-spring-boot-testcontainers/</loc><lastmod>2025-10-02T23:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/til/simplify-repository-test-datajpatest/</loc><lastmod>2025-10-01T23:50:10&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/about/</loc><lastmod>2025-10-05T13:50:55&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</loc><lastmod>2025-10-01T22:04:36&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/posts/</loc><lastmod>2025-10-01T22:04:36&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:48616/categories/</loc></url><url>
-            <loc>http://localhost:48616/til/</loc><lastmod>2025-10-04T15:03:13&#43;07:00</lastmod></url></urlset>
+            <loc>http://localhost:1313/</loc><lastmod>2025-10-16T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/java/</loc><lastmod>2025-10-16T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/naming-convention/</loc><lastmod>2025-10-16T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/spring/</loc><lastmod>2025-10-16T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/spring-boot/</loc><lastmod>2025-10-16T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/</loc><lastmod>2025-10-16T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/tdd/</loc><lastmod>2025-10-16T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/testing/</loc><lastmod>2025-10-16T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/til/test-naming-pattern-turned-tests-into-stories/</loc><lastmod>2025-10-16T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/architecture/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/best-practices/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/dto/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/til/why-never-expose-jpa-entities/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/datajpatest/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/testcontainers/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/til/integration-tests-spring-boot-testcontainers/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/til/simplify-repository-test-datajpatest/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/about/</loc><lastmod>2025-10-05T13:50:55&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</loc><lastmod>2025-10-01T22:04:36&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/posts/</loc><lastmod>2025-10-01T22:04:36&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/categories/</loc></url><url>
+            <loc>http://localhost:1313/til/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url></urlset>
