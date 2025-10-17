@@ -33,10 +33,10 @@
 .section-til .archive-item-summary {
   grid-area: summary;
   margin-top: .3rem;
-  max-width: 70ch;
-  color: var(--card-text-color-secondary, rgba(0,0,0,.68));
   line-height: 1.55;
   font-size: .96rem;
+  /* Let the color inherit from the theme's body text for dark/light mode compatibility */
+  color: inherit;
 }
 .section-til .archive-item-summary p {
   margin: 0;                                /* remove extra gaps */
@@ -59,21 +59,6 @@
   transform: translateY(-1px);
 }
 */
-
-/* TIL badge */
-.section-til .til-badge {
-  display: inline-block;
-  margin-right: .5rem;
-  padding: .1rem .4rem;
-  font-size: .72rem;
-  font-weight: 600;
-  letter-spacing: .02em;
-  border-radius: .35rem;
-  background: var(--card-border-color, rgba(0,0,0,.08));
-  color: var(--color-secondary);
-  vertical-align: baseline;
-  transform: translateY(-1px);
-}
 
 /* Slight badge glow on hover (nice but subtle) */
 .section-til .archive-item-link:hover .til-badge {
@@ -100,4 +85,176 @@
     margin-left: 0;
     opacity: .6;
   }
+}
+
+/* ---------------- Section Header Banners ---------------- */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.6rem;
+  border-radius: 1rem;
+  margin: 1.5rem 0 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background: var(--card-background, var(--body-background));
+  border: 1px solid var(--card-border-color, rgba(0,0,0,0.08));
+}
+
+.section-header-icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.section-header-text h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.section-header-text p {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  color: var(--card-text-color-secondary, rgba(0,0,0,0.7));
+}
+
+/* Theme variations */
+.til-header-banner {
+  border-left: 5px solid #6ea8fe;
+  background: linear-gradient(
+    90deg,
+    rgba(110, 168, 254, 0.07) 0%,
+    transparent 80%
+  );
+}
+
+.posts-header-banner {
+  border-left: 5px solid #81c784;
+  background: linear-gradient(
+    90deg,
+    rgba(129, 199, 132, 0.07) 0%,
+    transparent 80%
+  );
+}
+
+/* 🌙 Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .til-header-banner {
+    border-left-color: #91b9ff;
+    background: linear-gradient(
+      90deg,
+      rgba(145, 185, 255, 0.12) 0%,
+      transparent 80%
+    );
+  }
+
+  .posts-header-banner {
+    border-left-color: #a5d6a7;
+    background: linear-gradient(
+      90deg,
+      rgba(165, 214, 167, 0.12) 0%,
+      transparent 80%
+    );
+  }
+}
+
+/* Section introduction paragraphs / summary text */
+.section-intro {
+  margin: 0.8rem 0 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--card-text-color-secondary, rgba(0, 0, 0, 0.75));
+}
+
+.section-intro p {
+  margin: 0.5rem 0;
+}
+
+/* Dark Mode & Theme Adaptation */
+
+/* ---------- Shared helpers (no hard colors!) ---------- */
+.section-intro,
+.section-header,
+.section-header * ,
+.til-diagram,
+.til-diagram * {
+  color: inherit; /* let LoveIt control base text color */
+}
+
+.section-header,
+.til-diagram {
+  background: var(--card-background);
+  border: 1px solid var(--card-border-color);
+}
+
+/* Titles and secondary text */
+.section-header-text h1 { margin: 0; font-weight: 700; font-size: 1.4rem; }
+.section-header-text p,
+.section-intro,
+.til-diagram-caption,
+.archive-item-summary p {
+  color: var(--card-text-color-secondary);
+}
+
+/* Subtle elevation */
+.section-header,
+.til-diagram { border-radius: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,.05); }
+.til-diagram:hover,
+.section-header:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-2px); }
+
+/* Icons */
+.section-header-icon { font-size: 2.2rem; flex-shrink: 0; margin-right: 1rem; }
+
+/* Accent tints (use only translucent backgrounds; text still inherits) */
+.til-header-banner {
+  border-left: 5px solid #6ea8fe;
+  background: linear-gradient(90deg, rgba(110,168,254,.07) 0%, transparent 80%);
+}
+.posts-header-banner {
+  border-left: 5px solid #81c784;
+  background: linear-gradient(90deg, rgba(129,199,132,.07) 0%, transparent 80%);
+}
+
+/* Slightly stronger tint in dark mode so it’s still visible */
+@media (prefers-color-scheme: dark) {
+  .til-header-banner {
+    border-left-color: #91b9ff;
+    background: linear-gradient(90deg, rgba(145,185,255,.12) 0%, transparent 80%);
+  }
+  .posts-header-banner {
+    border-left-color: #a5d6a7;
+    background: linear-gradient(90deg, rgba(165,214,167,.12) 0%, transparent 80%);
+  }
+}
+
+/* Diagram card internals */
+.til-diagram .mermaid { margin-top: .4rem; }
+
+/* Put title + TIL badge on one line cleanly */
+.section-til .archive-item-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* TIL badge pill: neutral text (not link-blue), subtle tint */
+.section-til .archive-item-link .til-badge {
+  padding: .18rem .5rem;
+  border-radius: .5rem;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--card-text-color-secondary);
+  pointer-events: none;                       /* whole row still clickable */
+  border: 1px solid var(--card-border-color);
+  background: var(--card-border-color, rgba(0,0,0,.08));
+  /* Ensure consistent vertical alignment with title */
+  display: inline-block;
+  vertical-align: baseline;
+  transform: translateY(-1px);
+}
+
+/* Override for a slightly more vibrant badge in dark mode */
+[theme=dark] .section-til .archive-item-link .til-badge {
+  background-color: rgba(145, 185, 255, 0.15);
+  border-color: rgba(145, 185, 255, 0.25);
 }

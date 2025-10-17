@@ -25,7 +25,7 @@
     <body data-header-desktop="fixed" data-header-mobile="auto"><script>
           const query = window.matchMedia('(prefers-color-scheme: dark)');
           function applyTheme() {
-            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let theme = window.localStorage?.getItem('theme') || 'light';
             let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
             document.body.setAttribute('theme', isDark? 'dark' : 'light');
             document.body.setAttribute('cfg-theme', theme);

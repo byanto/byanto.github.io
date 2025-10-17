@@ -43,7 +43,8 @@ enableGitInfo = true
         title = "GitHub"
 
 [params]
-    defaultTheme = "auto"
+    defaultTheme = "light"
+    themeAutoDetect = false
     gitRepo = "https://github.com/byanto"
     title = "Budi Yanto - Java Backend Developer | Spring Boot | TU Berlin Graduate"
     description = "Software Engineer and Java Backend Developer with a Master's degree from TU Berlin."
