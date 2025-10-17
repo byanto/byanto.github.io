@@ -92,4 +92,12 @@ enableGitInfo = true
         github = "byanto"
         linkedin = "byanto"
         email = "hello@budiyanto.com"
+
+# PostCSS/PurgeCSS config
+[build.cachebusters]
+  [[build.cachebusters.source]]
+    name = ":any"
+    target = "css"
+  [build.cachebusters.integrity]
+    enabled = false
         

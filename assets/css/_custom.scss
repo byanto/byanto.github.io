@@ -137,6 +137,7 @@
 }
 
 /* 🌙 Dark mode adjustments */
+/*
 @media (prefers-color-scheme: dark) {
   .til-header-banner {
     border-left-color: #91b9ff;
@@ -156,7 +157,7 @@
     );
   }
 }
-
+*/
 /* Section introduction paragraphs / summary text */
 .section-intro {
   margin: 0.8rem 0 2rem;
@@ -214,7 +215,7 @@
   background: linear-gradient(90deg, rgba(129,199,132,.07) 0%, transparent 80%);
 }
 
-/* Slightly stronger tint in dark mode so it’s still visible */
+/*
 @media (prefers-color-scheme: dark) {
   .til-header-banner {
     border-left-color: #91b9ff;
@@ -224,6 +225,17 @@
     border-left-color: #a5d6a7;
     background: linear-gradient(90deg, rgba(165,214,167,.12) 0%, transparent 80%);
   }
+}
+*/
+
+/* Dark mode: Slightly stronger tint so it’s still visible */
+[theme=dark] .til-header-banner {
+  border-left-color: #91b9ff;
+  background: linear-gradient(90deg, rgba(145,185,255,.12) 0%, transparent 80%);
+}
+[theme=dark] .posts-header-banner {
+  border-left-color: #a5d6a7;
+  background: linear-gradient(90deg, rgba(165,214,167,.12) 0%, transparent 80%);
 }
 
 /* Diagram card internals */

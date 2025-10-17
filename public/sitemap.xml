@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://localhost:1313/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/</loc><lastmod>2025-10-17T17:25:17&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/tags/java/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/tags/naming-convention/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/tags/spring/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
@@ -21,6 +21,6 @@
             <loc>http://localhost:1313/til/simplify-repository-test-datajpatest/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/about/</loc><lastmod>2025-10-05T13:50:55&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</loc><lastmod>2025-10-01T22:04:36&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:1313/posts/</loc><lastmod>2025-10-01T22:04:36&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/categories/</loc></url><url>
-            <loc>http://localhost:1313/til/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url></urlset>
+            <loc>http://localhost:1313/posts/</loc><lastmod>2025-10-17T17:25:17&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/til/</loc><lastmod>2025-10-17T17:25:17&#43;07:00</lastmod></url></urlset>
