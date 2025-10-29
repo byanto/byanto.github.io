@@ -9,7 +9,7 @@
     <pubDate>Wed, 29 Oct 2025 00:00:00 &#43;0000</pubDate>
     <author>Budi Yanto</author>
     <guid>http://localhost:1313/til/stopped-forgetting-encode-passwords-mapstruct/</guid>
-    <description><![CDATA[How I made password encoding automatic and impossible to forget using MapStruct’s qualifier mapping pattern.]]></description>
+    <description><![CDATA[I used to rely on memory to call passwordEncoder.encode() — until I made password encoding automatic with MapStruct. Now it happens safely by design.]]></description>
 </item>
 </channel>
 </rss>

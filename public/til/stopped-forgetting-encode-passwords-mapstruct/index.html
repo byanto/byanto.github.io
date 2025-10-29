@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/localhost:1313\/til\/stopped-forgetting-encode-passwords-mapstruct\/"
-        },"genre": "posts","keywords": "spring boot, mapstruct, security, dto mapping, java","wordcount":  601 ,
+        },"genre": "posts","keywords": "spring boot, mapstruct, security, dto mapping, java","wordcount":  701 ,
         "url": "http:\/\/localhost:1313\/til\/stopped-forgetting-encode-passwords-mapstruct\/","datePublished": "2025-10-29T00:00:00+00:00","dateModified": "2025-10-29T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -122,8 +122,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">How I Stopped Forgetting to Encode Passwords — Thanks to MapStruct</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Budi Yanto</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-10-29">2025-10-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;601 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-10-29">2025-10-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;701 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -136,7 +136,7 @@
         <li><a href="#context">Context</a></li>
         <li><a href="#problem">Problem</a></li>
         <li><a href="#solution--explanation">Solution / Explanation</a></li>
-        <li><a href="#result-a-clean-and-safe-service-layer">Result: A Clean and Safe Service Layer</a></li>
+        <li><a href="#result-a-clean-and-secure-service-layer">Result: A Clean and Secure Service Layer</a></li>
         <li><a href="#key-takeaways">Key Takeaways</a></li>
         <li><a href="#reflection">Reflection</a></li>
       </ul>
@@ -163,11 +163,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">userRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">userMapper</span><span class="p">.</span><span class="na">toUserResponse</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
-<p>Simple, right? But it only takes one missed line (that encoding line) — maybe in a test, a refactor, or a new feature — to save a plain-text password by mistake. That’s what I now call the <em>“Don’t Forget Pattern.”</em> It works until the day you forget. It depends entirely on human memory, which is never a reliable part of a system design.</p>
+<p>This works, but it has a hidden danger: it relies on the developer always remembering to perform the encoding step. It&rsquo;s a procedural task that&rsquo;s easy to miss during a refactor or when a new developer works on the code, creating a major security vulnerability. It only takes one missed line — that encoding line — to save a plain-text password by mistake. That’s what I now call the <em>“Don’t Forget Pattern.”</em> It works until the day you forget. It depends entirely on human memory, which is never a reliable part of a system design.</p>
 <hr>
 <h3 id="solution--explanation">Solution / Explanation</h3>
-<p>Make password encoding happen automatically during the mapping process — so <code>userMapper.toUser(request)</code> always produces a properly encoded password. The fix came from a pattern I now call the <strong>“Specialist Pattern”</strong> — separating sensitive logic into a dedicated, declarative mapper.</p>
-<h4 id="1-create-a-specialist-component">1. Create a Specialist Component</h4>
+<p>The password should be encoded automatically as part of the mapping process itself, making the service layer cleaner and removing the possibility of human error. The method <code>userMapper.toUser(request)</code> should always produces a properly encoded password. <code>MapStruct</code>, the library I use for DTO-entity mapping, has a powerful and elegant pattern for this exact scenario. It involves creating a dedicated <strong>&ldquo;specialist&rdquo;</strong> component for the encoding and telling the main mapper to use it.</p>
+<h4 id="1-create-a-specialist-component-for-encoding">1. Create a Specialist Component for Encoding</h4>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-java">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
@@ -179,7 +179,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PasswordEncoder</span><span class="w"> </span><span class="n">passwordEncoder</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@EncodedMapping</span><span class="w"> </span><span class="c1">// custom qualifier (step 2)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@EncodedMapping</span><span class="w"> </span><span class="c1">// custom annotation (see Step 2)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">encode</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">raw</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">raw</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">passwordEncoder</span><span class="p">.</span><span class="na">encode</span><span class="p">(</span><span class="n">raw</span><span class="p">);</span><span class="w">
@@ -221,8 +221,8 @@
 <div class="mermaid" id="id-1"></div>
 <p>This flow makes password encoding declarative and foolproof — no more manual calls scattered across the codebase.</p>
 <hr>
-<h3 id="result-a-clean-and-safe-service-layer">Result: A Clean and Safe Service Layer</h3>
-<p>Now the service code looks like this:</p>
+<h3 id="result-a-clean-and-secure-service-layer">Result: A Clean and Secure Service Layer</h3>
+<p>With this pattern in place, my <code>UserService</code> is now beautifully simple and secure. It no longer knows or cares about the details of password encoding.</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-java">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
@@ -234,7 +234,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">userRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">userMapper</span><span class="p">.</span><span class="na">toUserResponse</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
-<p>It’s cleaner, safer, and impossible to forget the encoding step.</p>
+<p>By delegating the encoding logic to a specialized component within the mapping layer, the process is now declarative, secure by design, and much more maintainable.</p>
 <hr>
 <h3 id="key-takeaways">Key Takeaways</h3>
 <ul>

@@ -3,7 +3,7 @@ title = "How I Stopped Forgetting to Encode Passwords — Thanks to MapStruct"
 slug = "stopped-forgetting-encode-passwords-mapstruct"
 date = "2025-10-29"
 description = "I used to manually call passwordEncoder.encode() in every registration flow — until I found a cleaner, safer way with MapStruct. Now password encoding happens automatically and securely by design."
-summary = "How I made password encoding automatic and impossible to forget using MapStruct’s qualifier mapping pattern."
+summary = "I used to rely on memory to call passwordEncoder.encode() — until I made password encoding automatic with MapStruct. Now it happens safely by design."
 tags = ["spring boot", "mapstruct", "security", "dto mapping", "java"]
 draft = false
 +++
@@ -32,15 +32,15 @@ public UserResponse registerUser(RegisterRequest request) {
 }
 ```
 
-Simple, right? But it only takes one missed line (that encoding line) — maybe in a test, a refactor, or a new feature — to save a plain-text password by mistake. That’s what I now call the *“Don’t Forget Pattern.”* It works until the day you forget. It depends entirely on human memory, which is never a reliable part of a system design.
+This works, but it has a hidden danger: it relies on the developer always remembering to perform the encoding step. It's a procedural task that's easy to miss during a refactor or when a new developer works on the code, creating a major security vulnerability. It only takes one missed line — that encoding line — to save a plain-text password by mistake. That’s what I now call the *“Don’t Forget Pattern.”* It works until the day you forget. It depends entirely on human memory, which is never a reliable part of a system design.
 
 ---
 
 ### Solution / Explanation
 
-Make password encoding happen automatically during the mapping process — so `userMapper.toUser(request)` always produces a properly encoded password. The fix came from a pattern I now call the **“Specialist Pattern”** — separating sensitive logic into a dedicated, declarative mapper.
+The password should be encoded automatically as part of the mapping process itself, making the service layer cleaner and removing the possibility of human error. The method `userMapper.toUser(request)` should always produces a properly encoded password. `MapStruct`, the library I use for DTO-entity mapping, has a powerful and elegant pattern for this exact scenario. It involves creating a dedicated **"specialist"** component for the encoding and telling the main mapper to use it.
 
-#### 1. Create a Specialist Component
+#### 1. Create a Specialist Component for Encoding
 
 ```java
 @Component
@@ -49,7 +49,7 @@ public class PasswordEncodingMapper {
 
     private final PasswordEncoder passwordEncoder;
 
-    @EncodedMapping // custom qualifier (step 2)
+    @EncodedMapping // custom annotation (see Step 2)
     public String encode(String raw) {
         if (raw == null) return null;
         return passwordEncoder.encode(raw);
@@ -112,9 +112,9 @@ This flow makes password encoding declarative and foolproof — no more manual c
 
 ---
 
-### Result: A Clean and Safe Service Layer
+### Result: A Clean and Secure Service Layer
 
-Now the service code looks like this:
+With this pattern in place, my `UserService` is now beautifully simple and secure. It no longer knows or cares about the details of password encoding.
 
 ```java
 @Transactional
@@ -125,7 +125,7 @@ public UserResponse registerUser(RegisterRequest request) {
 }
 ```
 
-It’s cleaner, safer, and impossible to forget the encoding step.
+By delegating the encoding logic to a specialized component within the mapping layer, the process is now declarative, secure by design, and much more maintainable.
 
 ---
 
