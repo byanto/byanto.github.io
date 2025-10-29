@@ -2,12 +2,16 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://localhost:1313/</loc><lastmod>2025-10-17T17:25:17&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:1313/tags/java/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/dto-mapping/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/til/stopped-forgetting-encode-passwords-mapstruct/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/java/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/mapstruct/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/security/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/spring-boot/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://localhost:1313/tags/naming-convention/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/tags/spring/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:1313/tags/spring-boot/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:1313/tags/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/tags/tdd/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/tags/testing/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/til/test-naming-pattern-turned-tests-into-stories/</loc><lastmod>2025-10-16T21:39:11&#43;07:00</lastmod></url><url>

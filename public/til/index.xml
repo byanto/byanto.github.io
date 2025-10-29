@@ -8,6 +8,13 @@
     <language>en-us</language>
     <atom:link href="http://localhost:1313/til/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>How I Stopped Forgetting to Encode Passwords — Thanks to MapStruct</title>
+      <link>http://localhost:1313/til/stopped-forgetting-encode-passwords-mapstruct/</link>
+      <pubDate>Wed, 29 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/til/stopped-forgetting-encode-passwords-mapstruct/</guid>
+      <description>How I made password encoding automatic and impossible to forget using MapStruct’s qualifier mapping pattern.</description>
+    </item>
+    <item>
       <title>The Test Naming Pattern That Turned My Tests Into Stories</title>
       <link>http://localhost:1313/til/test-naming-pattern-turned-tests-into-stories/</link>
       <pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate>
