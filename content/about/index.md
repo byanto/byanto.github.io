@@ -5,7 +5,7 @@ title = "About Me"
 description = "About Me"
 +++
 
-Hi, I’m **Budi Yanto**, a software engineer with a unique background that bridges technology, entrepreneurship, and global experience. I'm passionate about building clean, testable, and cloud-ready applications with Spring Boot, Docker, and PostgreSQL.
+Hi, I’m **Budi Yanto**, a software developer with a unique background that bridges technology, entrepreneurship, and global experience. I'm passionate about building clean, testable, and cloud-ready applications with Spring Boot, Docker, and PostgreSQL.
 
 I hold a **Master’s degree in Computer Science from TU Berlin**, where I developed a solid foundation in software architecture, data systems, and problem solving. After several years in Germany, I returned to Indonesia and founded a successful e-commerce business from the ground up. Through this entrepreneurial journey, I learned to combine technology with business strategy — using data to guide decisions, optimizing operations through tools like `BigSeller`, and managing international supply chains with Chinese suppliers via `1688`.
 
