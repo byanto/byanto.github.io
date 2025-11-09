@@ -47,7 +47,7 @@ enableGitInfo = true
     themeAutoDetect = false
     gitRepo = "https://github.com/byanto"
     title = "Budi Yanto - Java Backend Developer | Spring Boot | TU Berlin Graduate"
-    description = "Software Engineer and Java Backend Developer with a Master's degree from TU Berlin."
+    description = "Software Developer with a Master's degree from TU Berlin."
 
     # Author config
     [params.author]
@@ -81,7 +81,7 @@ enableGitInfo = true
             enable = true
             avatarURL = "/images/avatar.png"
             title = ""
-            subtitle = "Software Engineer"
+            subtitle = "Software Developer"
             typeit = true
             social = true
         [params.home.posts]
