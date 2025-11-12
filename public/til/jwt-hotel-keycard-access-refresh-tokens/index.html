@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens - Budi Yanto</title><meta name="Description" content="If JWTs ever felt confusing, think of them like hotel keycards. The access token opens your room fast; the refresh token renews your stay securely at the front desk."><meta property="og:url" content="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/">
+  <meta property="og:site_name" content="Budi Yanto">
+  <meta property="og:title" content="JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens">
+  <meta property="og:description" content="If JWTs ever felt confusing, think of them like hotel keycards. The access token opens your room fast; the refresh token renews your stay securely at the front desk.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="til">
+    <meta property="article:published_time" content="2025-11-12T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-12T00:00:00+00:00">
+    <meta property="article:tag" content="Authentication">
+    <meta property="article:tag" content="Security">
+    <meta property="article:tag" content="Jwt">
+    <meta property="article:tag" content="Backend">
+    <meta property="article:tag" content="Spring Security">
+    <meta property="article:tag" content="Access Token">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens">
+  <meta name="twitter:description" content="If JWTs ever felt confusing, think of them like hotel keycards. The access token opens your room fast; the refresh token renews your stay securely at the front desk.">
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/" /><link rel="prev" href="http://localhost:1313/til/stopped-forgetting-encode-passwords-mapstruct/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/til\/jwt-hotel-keycard-access-refresh-tokens\/"
+        },"genre": "posts","keywords": "authentication, security, jwt, backend, spring security, access token, refresh token","wordcount":  1151 ,
+        "url": "http:\/\/localhost:1313\/til\/jwt-hotel-keycard-access-refresh-tokens\/","datePublished": "2025-11-12T00:00:00+00:00","dateModified": "2025-11-12T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Budi Yanto"
+            },"description": "If JWTs ever felt confusing, think of them like hotel keycards. The access token opens your room fast; the refresh token renews your stay securely at the front desk."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'light';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Budi Yanto">Home</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/til/"> TIL </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/byanto" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Budi Yanto">Home</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/til/" title="">TIL</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/byanto" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Budi Yanto</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-12">2025-11-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1151 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#context">Context</a></li>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#solution--explanation">Solution / Explanation</a>
+      <ul>
+        <li><a href="#1-the-access-token-your-hotel-room-key-card-the-fast-pass">1. The <code>Access Token</code>: Your Hotel Room Key Card (The Fast Pass)</a></li>
+        <li><a href="#2-the-refresh-token-the-secure-voucher-at-the-front-desk-the-vip-key">2. The <code>Refresh Token</code>: The Secure Voucher at the Front Desk (The VIP Key)</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-flow-the-beautiful-dance-in-action">The Flow: The Beautiful Dance in Action</a></li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#reflection">Reflection</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="context">Context</h2>
+<p>While building the <code>user-service</code> for my <code>FinTrackr</code> project, I hit a coding wall, but a conceptual one. I was implementing authentication and kept asking myself, <em>&ldquo;Why do I need two tokens? An <code>access token</code> and a <code>refresh token</code>? This feels like needless complexity.&rdquo;</em> It was frustrating because it seemed like a common pattern, but the &ldquo;why&rdquo; felt just out of reach.</p>
+<hr>
+<h2 id="problem">Problem</h2>
+<p>My first question was simple: <em>Why not just use one <code>access token</code> (JWT) that lasts longer?</em>
+After all, who wants users re-authenticating every hour? But that&rsquo;s where I misunderstood what tokens are meant to do, which leads me to the second question: If an <code>access token</code> is stolen, how do you invalidate it? The stateless nature of JWTs means they are valid until they expire.</p>
+<p>My first thought was, &ldquo;Okay, I&rsquo;ll just make the <code>access token</code> stateful, store it in the database and check it on every request.&rdquo; But then it hit me — that completely defeats the purpose! Hitting the database on every single API call would be a performance nightmare. How could I get both performance <em>and</em> security at the same time?</p>
+<hr>
+<h2 id="solution--explanation">Solution / Explanation</h2>
+<p>The solution isn&rsquo;t to choose one over the other, but to use both in an elegant partnership. The <strong>&ldquo;Hotel Analogy&rdquo;</strong> is what finally made it click for me.</p>
+<h3 id="1-the-access-token-your-hotel-room-key-card-the-fast-pass">1. The <code>Access Token</code>: Your Hotel Room Key Card (The Fast Pass)</h3>
+<p>Imagine you check into a hotel. The front desk gives you a plastic key card. This is your <code>Access Token</code> (JWT).</p>
+<ul>
+<li><strong>It&rsquo;s Stateless and Self-Contained:</strong> The key card itself has all the information the door lock needs: which room it opens (userId), what floors you can access (roles), and when it expires (exp).</li>
+<li><strong>The Magic (Performance):</strong> When you tap your card on the door, it doesn&rsquo;t need to call the front desk and ask, &ldquo;Hey, is this person allowed in?&rdquo; It opens <em>instantly</em>. This is why JWT access token are amazing for performance. Our API Gateway can validate them for every request without ever touching a database.</li>
+<li><strong>The Trade-off (Security):</strong> What happens if you lose your key card? Whoever finds it can access your room until the card&rsquo;s programmed checkout time. You can&rsquo;t just &ldquo;turn off&rdquo; that specific card from a distance. This is why access tokens must be short-lived (like 15-60 minutes). The potential damage from a stolen token is limited to a very small window.</li>
+</ul>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// In JwtService.java - Creating a short-lived, stateless access token</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">generateAccessToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">roles</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">nowMillis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Date</span><span class="w"> </span><span class="n">exp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="n">nowMillis</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">accessTokenExpirationMs</span><span class="p">);</span><span class="w"> </span><span class="c1">// e.g., 15 minutes from now</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Jwts</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">subject</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">claim</span><span class="p">(</span><span class="s">&#34;roles&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">roles</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">issuedAt</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="n">nowMillis</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">expiration</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">signWith</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">compact</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<h3 id="2-the-refresh-token-the-secure-voucher-at-the-front-desk-the-vip-key">2. The <code>Refresh Token</code>: The Secure Voucher at the Front Desk (The VIP Key)</h3>
+<p>So, if your key card expires every 15 minutes, does that mean you have to go back to the front desk and show your ID and password every time? That would be a terrible user experience.</p>
+<p>This is where the <code>Refresh Token</code> comes in. Think of it as a special, secure voucher the hotel gives you at check-in.</p>
+<ul>
+<li><strong>It&rsquo;s Stateful and Opaque:</strong> This token is just a long, random, unique string. Its only purpose is to be a pointer to your secure session record kept safely behind the front desk (in our <code>refresh_tokens</code> database table).</li>
+<li><strong>The Magic:</strong> When your key card (<code>access token</code>) stops working, you don&rsquo;t log in again. You simply walk to the front desk and present your voucher (make a call to the <code>/api/auth/renewtoken</code> endpoint). The clerk checks their system to see if the voucher is valid &ndash; if it is, they give you a brand new key card (a new <code>access token</code>) and, for top-tier security, they often take your old voucher and give you a brand new voucher (this is called <strong>token rotation</strong>).</li>
+<li><strong>The Trade-off (Performance)</strong>: This process requires a database lookup. But that&rsquo;s okay! It only happens once every 15-60 minutes, not on every single API call.</li>
+</ul>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// In AuthenticationService.java - Using the stateful refresh token</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Transactional</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">AuthTokenResponse</span><span class="w"> </span><span class="nf">renewAuthToken</span><span class="p">(</span><span class="n">AuthTokenRequest</span><span class="w"> </span><span class="n">oldTokenRequest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">refreshTokenService</span><span class="p">.</span><span class="na">findByTokenValue</span><span class="p">(</span><span class="n">oldTokenRequest</span><span class="p">.</span><span class="na">refreshToken</span><span class="p">())</span><span class="w"> </span><span class="c1">// 1. Find in DB</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">refreshTokenService</span><span class="p">::</span><span class="n">verifyExpiration</span><span class="p">)</span><span class="w"> </span><span class="c1">// 2. Check if expired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">oldToken</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// 3. If valid, create new tokens</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kd">var</span><span class="w"> </span><span class="n">newRefreshToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">refreshTokenService</span><span class="p">.</span><span class="na">rotateToken</span><span class="p">(</span><span class="n">oldToken</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">newAccessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jwtService</span><span class="p">.</span><span class="na">generateAccessToken</span><span class="p">(...);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AuthTokenResponse</span><span class="p">(</span><span class="n">newAccessToken</span><span class="p">,</span><span class="w"> </span><span class="n">newRefreshToken</span><span class="p">.</span><span class="na">getValue</span><span class="p">(),</span><span class="w"> </span><span class="p">...);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">orElseThrow</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RefreshTokenNotFoundException</span><span class="p">(...));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<hr>
+<h2 id="the-flow-the-beautiful-dance-in-action">The Flow: The Beautiful Dance in Action</h2>
+<p><strong>1. Login:</strong> You (User) send your username and password to <code>/api/auth/login</code>. The server validates you and returns:</p>
+<ul>
+<li>An <code>Access Token</code> (short-lived key card).</li>
+<li>A <code>Refresh Token</code> (long-lived voucher, often in a secure HttpOnly cookie).</li>
+</ul>
+<p><strong>2. Accessing Resources:</strong> For the next 15 minutes, you send the <code>access token</code> with every API call. The <code>API Gateway</code> validates it instantly. Life is fast.</p>
+<p><strong>3. Expiration:</strong> You make a call with your now-expired <code>access token</code>. The <code>API Gateway</code> rejects it with a 401 Unauthorized.</p>
+<p><strong>4. Renewal:</strong> Your application&rsquo;s frontend automatically catches the 401 and silently makes a call to <code>/api/auth/renewtoken</code>, sending the <code>refresh token</code>.</p>
+<p><strong>5. Re-authentication:</strong> The server validates the <code>refresh token</code> against the database, generates a new <code>access token</code> and a new <code>refresh token</code>, and sends them back.</p>
+<p><strong>6. Seamless Continuation:</strong> Your application retries the original failed request, but this time with the new <code>access token</code>. It works. The user never noticed a thing.</p>
+<p>This pattern gives us the best of both worlds: <strong>speed for every request, security for long sessions.</strong></p>
+<p>The Trade-Off in One Table:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Feature</th>
+          <th style="text-align: left">Access Token</th>
+          <th style="text-align: left">Refresh Token</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Purpose</td>
+          <td style="text-align: left">Access resources on every request</td>
+          <td style="text-align: left">Get a new access token</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">How it works</td>
+          <td style="text-align: left">Stateless (self-contained JWT)</td>
+          <td style="text-align: left">Stateful (pointer in DB)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Performance</td>
+          <td style="text-align: left">Fast: Validated in memory</td>
+          <td style="text-align: left">Slower: Requires DB lookup</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">When to use</td>
+          <td style="text-align: left">On every API call</td>
+          <td style="text-align: left">Only when access token expires</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Lifespan</td>
+          <td style="text-align: left">Short (e.g. 15 minutes)</td>
+          <td style="text-align: left">Long (e.g. 7 days)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Security</td>
+          <td style="text-align: left">High risk if stolen (but short window)</td>
+          <td style="text-align: left">Low risk (can be revoked in DB)</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li><strong><code>Access Tokens</code> are for <em>Performance</em>:</strong> They are stateless, self-contained, and must be short-lived. Their job is to make frequent API calls fast.</li>
+<li><strong><code>Refresh Tokens</code> are for <em>Security &amp; Persistence</em>:</strong> They are stateful, stored in a database, and long-lived. Their job is to securely grant new access tokens without forcing the user to log in again.</li>
+<li><strong>The combination is the solution:</strong> This pattern gives you blazing-fast performance for 99% of requests and iron-clad security and session control when you need it.</li>
+</ul>
+<hr>
+<h2 id="reflection">Reflection</h2>
+<p>This pattern used to frustrate me, but now I see it as one of those designs that’s simple only after you understand it. I was looking at the pattern as two separate, redundant things. The &ldquo;aha!&rdquo; moment was seeing them as two halves of a single, elegant solution. It&rsquo;s a fundamental trade-off: the stateless speed of the access token is made safe by the stateful control of the refresh token. Understanding this distinction feels like unlocking a core principle of modern backend architecture. It&rsquo;s not just about writing code that works; it&rsquo;s about designing systems that are both scalable and secure.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-11-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/" data-title="JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens" data-hashtags="authentication,security,jwt,backend,spring security,access token,refresh token"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/" data-title="JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/" data-hashtag="authentication"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/" data-title="JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/" data-title="JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/" data-title="JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/" data-title="JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens" data-description="If JWTs ever felt confusing, think of them like hotel keycards. The access token opens your room fast; the refresh token renews your stay securely at the front desk."><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2ftil%2fjwt-hotel-keycard-access-refresh-tokens%2f&amp;text=JWTs%20Explained%20Like%20a%20Hotel%20Keycard%3a%20The%20Dance%20Between%20Access%20and%20Refresh%20Tokens" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/authentication/">Authentication</a>,&nbsp;<a href="/tags/security/">Security</a>,&nbsp;<a href="/tags/jwt/">Jwt</a>,&nbsp;<a href="/tags/backend/">Backend</a>,&nbsp;<a href="/tags/spring-security/">Spring Security</a>,&nbsp;<a href="/tags/access-token/">Access Token</a>,&nbsp;<a href="/tags/refresh-token/">Refresh Token</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/til/stopped-forgetting-encode-passwords-mapstruct/" class="prev" rel="prev" title="How I Stopped Forgetting to Encode Passwords — Thanks to MapStruct"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>How I Stopped Forgetting to Encode Passwords — Thanks to MapStruct</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Budi Yanto</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/algoliasearch/lite/browser.umd.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

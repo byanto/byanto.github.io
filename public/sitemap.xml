@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://localhost:1313/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/</loc><lastmod>2025-11-09T15:39:22&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/tags/dto-mapping/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://localhost:1313/til/stopped-forgetting-encode-passwords-mapstruct/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://localhost:1313/tags/java/</loc><lastmod>2025-10-29T00:00:00&#43;00:00</lastmod></url><url>
@@ -23,8 +23,14 @@
             <loc>http://localhost:1313/tags/testcontainers/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/til/integration-tests-spring-boot-testcontainers/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/til/simplify-repository-test-datajpatest/</loc><lastmod>2025-10-08T16:00:48&#43;07:00</lastmod></url><url>
-            <loc>http://localhost:1313/about/</loc><lastmod>2025-10-05T13:50:55&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/about/</loc><lastmod>2025-11-09T15:39:22&#43;07:00</lastmod></url><url>
             <loc>http://localhost:1313/posts/my-journey-from-berlin-developer-to-indonesia-and-back-again/</loc><lastmod>2025-10-01T22:04:36&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/access-token/</loc></url><url>
+            <loc>http://localhost:1313/tags/authentication/</loc></url><url>
+            <loc>http://localhost:1313/tags/backend/</loc></url><url>
             <loc>http://localhost:1313/categories/</loc></url><url>
+            <loc>http://localhost:1313/tags/jwt/</loc></url><url>
             <loc>http://localhost:1313/posts/</loc><lastmod>2025-10-17T17:25:17&#43;07:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/refresh-token/</loc></url><url>
+            <loc>http://localhost:1313/tags/spring-security/</loc></url><url>
             <loc>http://localhost:1313/til/</loc><lastmod>2025-10-17T17:25:17&#43;07:00</lastmod></url></urlset>
