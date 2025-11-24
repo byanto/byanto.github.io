@@ -130,7 +130,18 @@
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#the-mystery-a-race-against-my-own-code">The Mystery: A Race Against My Own Code</a></li>
+        <li><a href="#the-wrong-turns-weve-all-been-there">The Wrong Turns (We&rsquo;ve All Been There)</a></li>
+        <li><a href="#the-aha-moment-stop-depending-on-the-system-clock">The &ldquo;Aha!&rdquo; Moment: Stop Depending on the System Clock</a></li>
+        <li><a href="#what-i-really-learned">What I Really Learned</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
             </div><div class="content" id="content"><p>Let&rsquo;s be honest, there&rsquo;s a special kind of frustration that comes from a test that passes one minute and fails the next for no apparent reason. That was my world for a couple of days. I was building out the authentication flow for my Spring Boot user service, and my integration test for JWT token renewal was completely unreliable.</p>
 <p>The test was simple enough:</p>
 <ol>
@@ -140,7 +151,7 @@
 </ol>
 <p>Sometimes it passed. Sometimes it failed, claiming the new token was identical to the old one. How was that even possible?</p>
 <hr>
-<p><strong>The Mystery: A Race Against My Own Code</strong></p>
+<h3 id="the-mystery-a-race-against-my-own-code">The Mystery: A Race Against My Own Code</h3>
 <p>My first thought was, <strong>&ldquo;This is a race condition.&rdquo;</strong> My test environment is fast. The <code>login</code> and <code>renewtoken</code> API calls were happening so quickly that they were executing within the same single millisecond.</p>
 <p>I dug into my <code>JwtService</code> and found the culprit:</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
@@ -154,7 +165,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Date</span><span class="w"> </span><span class="n">exp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="n">nowMillis</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expiration</span><span class="p">);</span></span></span></code></pre></div></div>
 <p>Both tokens were being generated with the exact same <strong>&ldquo;issued at&rdquo;</strong> (iat) timestamp. Same timestamp, same username, same roles&hellip; of course the JWT string was identical!</p>
 <hr>
-<p><strong>The Wrong Turns (We&rsquo;ve All Been There)</strong></p>
+<h3 id="the-wrong-turns-weve-all-been-there">The Wrong Turns (We&rsquo;ve All Been There)</h3>
 <p>My first instinct? The one we all secretly try?</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-java">
@@ -166,7 +177,7 @@
 <p>It worked, but it felt dirty. Using <code>Thread.sleep()</code> is a huge code smell. It slows down the entire test suite and is completely non-deterministic. It might work on my laptop, but what about a faster CI server? It&rsquo;s a band-aid, not a fix.</p>
 <p>Then I noticed something weird. If I added <code>@Transactional</code> to the test, it passed consistently. For a moment, I thought I&rsquo;d found a real solution. But it was a red herring. The overhead of managing the database transaction was just adding enough of a delay for the system clock to tick over. It was another accidental <code>sleep()</code>, and it was hiding the real design flaw in my code.</p>
 <hr>
-<p><strong>The &ldquo;Aha!&rdquo; Moment: Stop Depending on the System Clock</strong></p>
+<h3 id="the-aha-moment-stop-depending-on-the-system-clock">The &ldquo;Aha!&rdquo; Moment: Stop Depending on the System Clock</h3>
 <p>The real problem wasn&rsquo;t the test; it was my service. My <code>JwtService</code> had a hidden, hard-coded dependency on the system&rsquo;s hardware clock. You can&rsquo;t control the system clock in a test, so the code was fundamentally untestable.</p>
 <p>The professional solution, and my &ldquo;aha!&rdquo; moment, was to treat time as just another dependency.</p>
 <p><strong>Step 1: Inject <code>java.time.Clock</code></strong></p>
@@ -236,7 +247,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
 <hr>
-<p><strong>What I Really Learned</strong></p>
+<h3 id="what-i-really-learned">What I Really Learned</h3>
 <p>This wasn&rsquo;t just about fixing a test. It was a fundamental lesson in software design.</p>
 <ul>
 <li><strong>A flaky test is a symptom of a design problem.</strong> Don&rsquo;t patch the test; fix the code.</li>

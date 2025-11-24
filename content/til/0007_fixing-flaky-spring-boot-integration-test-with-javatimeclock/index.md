@@ -20,7 +20,7 @@ Sometimes it passed. Sometimes it failed, claiming the new token was identical t
 
 ---
 
-**The Mystery: A Race Against My Own Code**
+### The Mystery: A Race Against My Own Code
 
 My first thought was, **"This is a race condition."** My test environment is fast. The `login` and `renewtoken` API calls were happening so quickly that they were executing within the same single millisecond.
 
@@ -37,7 +37,7 @@ Both tokens were being generated with the exact same **"issued at"** (iat) times
 
 ---
 
-**The Wrong Turns (We've All Been There)**
+### The Wrong Turns (We've All Been There)
 
 My first instinct? The one we all secretly try?
 
@@ -52,7 +52,7 @@ Then I noticed something weird. If I added `@Transactional` to the test, it pass
 
 ---
 
-**The "Aha!" Moment: Stop Depending on the System Clock**
+### The "Aha!" Moment: Stop Depending on the System Clock
 
 The real problem wasn't the test; it was my service. My `JwtService` had a hidden, hard-coded dependency on the system's hardware clock. You can't control the system clock in a test, so the code was fundamentally untestable.
 
@@ -125,7 +125,7 @@ public class AuthenticationFlowIntegrationTest {
 ```
 ---
 
-**What I Really Learned**
+### What I Really Learned
 
 This wasn't just about fixing a test. It was a fundamental lesson in software design.
 
