@@ -18,6 +18,8 @@ The test was simple enough:
 
 Sometimes it passed. Sometimes it failed, claiming the new token was identical to the old one. How was that even possible?
 
+---
+
 **The Mystery: A Race Against My Own Code**
 
 My first thought was, **"This is a race condition."** My test environment is fast. The `login` and `renewtoken` API calls were happening so quickly that they were executing within the same single millisecond.
@@ -33,6 +35,8 @@ Date exp = new Date(nowMillis + expiration);
 
 Both tokens were being generated with the exact same **"issued at"** (iat) timestamp. Same timestamp, same username, same roles... of course the JWT string was identical!
 
+---
+
 **The Wrong Turns (We've All Been There)**
 
 My first instinct? The one we all secretly try?
@@ -45,6 +49,8 @@ Thread.sleep(10);
 It worked, but it felt dirty. Using `Thread.sleep()` is a huge code smell. It slows down the entire test suite and is completely non-deterministic. It might work on my laptop, but what about a faster CI server? It's a band-aid, not a fix.
 
 Then I noticed something weird. If I added `@Transactional` to the test, it passed consistently. For a moment, I thought I'd found a real solution. But it was a red herring. The overhead of managing the database transaction was just adding enough of a delay for the system clock to tick over. It was another accidental `sleep()`, and it was hiding the real design flaw in my code.
+
+---
 
 **The "Aha!" Moment: Stop Depending on the System Clock**
 
@@ -117,13 +123,14 @@ public class AuthenticationFlowIntegrationTest {
     }
 }
 ```
+---
 
 **What I Really Learned**
 
 This wasn't just about fixing a test. It was a fundamental lesson in software design.
 
-**- A flaky test is a symptom of a design problem.** Don't patch the test; fix the code.
-**- Make your dependencies explicit.** If your code depends on the current time, that time source should be injected.
-**- Write code that is testable from the start.** This forces you into better, cleaner designs.
+- **A flaky test is a symptom of a design problem.** Don't patch the test; fix the code.
+- **Make your dependencies explicit.** If your code depends on the current time, that time source should be injected.
+- **Write code that is testable from the start.** This forces you into better, cleaner designs.
 
 By making this one change, I didn't just fix a flaky test. I made my application more robust, my architecture cleaner, and my entire test suite 100% reliable. And that's a win worth writing about.
