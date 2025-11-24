@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>JUnit - Tag - Budi Yanto</title>
+        <link>http://localhost:1313/tags/junit/</link>
+        <description>JUnit - Tag - Budi Yanto</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 24 Nov 2025 10:00:00 &#43;0700</lastBuildDate><atom:link href="http://localhost:1313/tags/junit/" rel="self" type="application/rss+xml" /><item>
+    <title>My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable.</title>
+    <link>http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/</link>
+    <pubDate>Mon, 24 Nov 2025 10:00:00 &#43;0700</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/</guid>
+    <description><![CDATA[My JWT token renewal test kept failing due to a race condition. I fixed it for good by making time a controllable dependency, not with hacks like Thread.sleep().]]></description>
+</item>
+</channel>
+</rss>

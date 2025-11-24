@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable. - Budi Yanto</title><meta name="Description" content="A personal story of debugging a flaky Spring Boot test for JWT token renewal. See how I moved past anti-patterns to a professional solution using java.time.Clock, making my tests 100% reliable."><meta property="og:url" content="http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/">
+  <meta property="og:site_name" content="Budi Yanto">
+  <meta property="og:title" content="My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable.">
+  <meta property="og:description" content="A personal story of debugging a flaky Spring Boot test for JWT token renewal. See how I moved past anti-patterns to a professional solution using java.time.Clock, making my tests 100% reliable.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="til">
+    <meta property="article:published_time" content="2025-11-24T10:00:00+07:00">
+    <meta property="article:modified_time" content="2025-11-24T10:00:00+07:00">
+    <meta property="article:tag" content="Java">
+    <meta property="article:tag" content="Spring Boot">
+    <meta property="article:tag" content="Testing">
+    <meta property="article:tag" content="JUnit">
+    <meta property="article:tag" content="Mockito">
+    <meta property="article:tag" content="Integration Testing">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable.">
+  <meta name="twitter:description" content="A personal story of debugging a flaky Spring Boot test for JWT token renewal. See how I moved past anti-patterns to a professional solution using java.time.Clock, making my tests 100% reliable.">
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/" /><link rel="prev" href="http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable.",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/til\/fixing-flaky-spring-boot-integration-test-with-javatimeclock\/"
+        },"genre": "posts","keywords": "Java, Spring Boot, Testing, JUnit, Mockito, Integration Testing, Clean Code, Software Design","wordcount":  766 ,
+        "url": "http:\/\/localhost:1313\/til\/fixing-flaky-spring-boot-integration-test-with-javatimeclock\/","datePublished": "2025-11-24T10:00:00+07:00","dateModified": "2025-11-24T10:00:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Budi Yanto"
+            },"description": "A personal story of debugging a flaky Spring Boot test for JWT token renewal. See how I moved past anti-patterns to a professional solution using java.time.Clock, making my tests 100% reliable."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'light';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Budi Yanto">Home</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/til/"> TIL </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/byanto" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Budi Yanto">Home</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/til/" title="">TIL</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/byanto" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable.</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Budi Yanto</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-24">2025-11-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;766 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>Let&rsquo;s be honest, there&rsquo;s a special kind of frustration that comes from a test that passes one minute and fails the next for no apparent reason. That was my world for a couple of days. I was building out the authentication flow for my Spring Boot user service, and my integration test for JWT token renewal was completely unreliable.</p>
+<p>The test was simple enough:</p>
+<ol>
+<li>Log in to get an access token and a refresh token.</li>
+<li>Immediately use that refresh token to get a new set of tokens.</li>
+<li>Assert that the new access token is different from the old one.</li>
+</ol>
+<p>Sometimes it passed. Sometimes it failed, claiming the new token was identical to the old one. How was that even possible?</p>
+<p><strong>The Mystery: A Race Against My Own Code</strong></p>
+<p>My first thought was, <strong>&ldquo;This is a race condition.&rdquo;</strong> My test environment is fast. The <code>login</code> and <code>renewtoken</code> API calls were happening so quickly that they were executing within the same single millisecond.</p>
+<p>I dug into my <code>JwtService</code> and found the culprit:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// The old, problematic code</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">long</span><span class="w"> </span><span class="n">nowMillis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Date</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="n">nowMillis</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Date</span><span class="w"> </span><span class="n">exp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="n">nowMillis</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expiration</span><span class="p">);</span></span></span></code></pre></div></div>
+<p>Both tokens were being generated with the exact same <strong>&ldquo;issued at&rdquo;</strong> (iat) timestamp. Same timestamp, same username, same roles&hellip; of course the JWT string was identical!</p>
+<p><strong>The Wrong Turns (We&rsquo;ve All Been There)</strong></p>
+<p>My first instinct? The one we all secretly try?</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// Don&#39;t do this!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">10</span><span class="p">);</span></span></span></code></pre></div></div>
+<p>It worked, but it felt dirty. Using <code>Thread.sleep()</code> is a huge code smell. It slows down the entire test suite and is completely non-deterministic. It might work on my laptop, but what about a faster CI server? It&rsquo;s a band-aid, not a fix.</p>
+<p>Then I noticed something weird. If I added <code>@Transactional</code> to the test, it passed consistently. For a moment, I thought I&rsquo;d found a real solution. But it was a red herring. The overhead of managing the database transaction was just adding enough of a delay for the system clock to tick over. It was another accidental <code>sleep()</code>, and it was hiding the real design flaw in my code.</p>
+<p><strong>The &ldquo;Aha!&rdquo; Moment: Stop Depending on the System Clock</strong></p>
+<p>The real problem wasn&rsquo;t the test; it was my service. My <code>JwtService</code> had a hidden, hard-coded dependency on the system&rsquo;s hardware clock. You can&rsquo;t control the system clock in a test, so the code was fundamentally untestable.</p>
+<p>The professional solution, and my &ldquo;aha!&rdquo; moment, was to treat time as just another dependency.</p>
+<p><strong>Step 1: Inject <code>java.time.Clock</code></strong></p>
+<p>I changed my services to stop calling static methods like <code>System.currentTimeMillis()</code>. Instead, they now ask for a <code>java.time.Clock</code> object in their constructor. This is a core principle of Dependency Injection.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// Before: A hidden, untestable dependency</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Instant</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">now</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// After: An explicit, controllable dependency</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@RequiredArgsConstructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JwtService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Clock</span><span class="w"> </span><span class="n">clock</span><span class="p">;</span><span class="w"> </span><span class="c1">// Injected!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">generateAccessToken</span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Instant</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clock</span><span class="p">.</span><span class="na">instant</span><span class="p">();</span><span class="w"> </span><span class="c1">// Used here!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// ...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<p><strong>Step 2: Provide the Clock for Production</strong></p>
+<p>For the real application, I just need to provide the standard system clock. A simple <code>@Configuration</code> class handles this beautifully. The best part? I can enforce the best practice of always using UTC on the server.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ClockConfig</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Clock</span><span class="w"> </span><span class="nf">clock</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Clock</span><span class="p">.</span><span class="na">systemUTC</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<p><strong>Step 3: Take Control in the Test</strong></p>
+<p>This is where it all comes together. In my integration test, I can now use <code>@MockitoBean</code> to replace the real <code>Clock</code> with a mock. I am now the master of time!</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-java">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@SpringBootTest</span><span class="p">(...)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AuthenticationFlowIntegrationTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@MockitoBean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Clock</span><span class="w"> </span><span class="n">clock</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">should_renewTokensSuccessfully</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// ...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 1. I decide what time it is for the login call.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Instant</span><span class="w"> </span><span class="n">loginTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;2025-01-01T10:00:00Z&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">clock</span><span class="p">.</span><span class="na">instant</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="n">loginTime</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// ... call /login endpoint ...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 2. I move time forward for the renewal call.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Instant</span><span class="w"> </span><span class="n">renewalTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loginTime</span><span class="p">.</span><span class="na">plusSeconds</span><span class="p">(</span><span class="n">10</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">when</span><span class="p">(</span><span class="n">clock</span><span class="p">.</span><span class="na">instant</span><span class="p">()).</span><span class="na">thenReturn</span><span class="p">(</span><span class="n">renewalTime</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// ... call /renewtoken endpoint ...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 3. Assert the tokens are different.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">newAccessToken</span><span class="p">).</span><span class="na">isNotEqualTo</span><span class="p">(</span><span class="n">initialAccessToken</span><span class="p">);</span><span class="w"> </span><span class="c1">// It passes. Every. Single. Time.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div></div>
+<p><strong>What I Really Learned</strong></p>
+<p>This wasn&rsquo;t just about fixing a test. It was a fundamental lesson in software design.</p>
+<p><strong>- A flaky test is a symptom of a design problem.</strong> Don&rsquo;t patch the test; fix the code.
+<strong>- Make your dependencies explicit.</strong> If your code depends on the current time, that time source should be injected.
+<strong>- Write code that is testable from the start.</strong> This forces you into better, cleaner designs.</p>
+<p>By making this one change, I didn&rsquo;t just fix a flaky test. I made my application more robust, my architecture cleaner, and my entire test suite 100% reliable. And that&rsquo;s a win worth writing about.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-11-24</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/" data-title="My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable." data-hashtags="Java,Spring Boot,Testing,JUnit,Mockito,Integration Testing,Clean Code,Software Design"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/" data-title="My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable."><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/" data-hashtag="Java"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/" data-title="My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable."><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/" data-title="My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable."><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/" data-title="My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable."><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/" data-title="My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable." data-description="A personal story of debugging a flaky Spring Boot test for JWT token renewal. See how I moved past anti-patterns to a professional solution using java.time.Clock, making my tests 100% reliable."><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2ftil%2ffixing-flaky-spring-boot-integration-test-with-javatimeclock%2f&amp;text=My%20Spring%20Boot%20Test%20Kept%20Failing%20Randomly.%20Here%e2%80%99s%20the%20Simple%20Fix%20That%20Made%20It%20100%25%20Reliable." target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/spring-boot/">Spring Boot</a>,&nbsp;<a href="/tags/testing/">Testing</a>,&nbsp;<a href="/tags/junit/">JUnit</a>,&nbsp;<a href="/tags/mockito/">Mockito</a>,&nbsp;<a href="/tags/integration-testing/">Integration Testing</a>,&nbsp;<a href="/tags/clean-code/">Clean Code</a>,&nbsp;<a href="/tags/software-design/">Software Design</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/til/jwt-hotel-keycard-access-refresh-tokens/" class="prev" rel="prev" title="JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Budi Yanto</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/algoliasearch/lite/browser.umd.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

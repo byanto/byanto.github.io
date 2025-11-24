@@ -8,6 +8,20 @@
     <language>en-us</language>
     <atom:link href="http://localhost:1313/til/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>My Spring Boot Test Kept Failing Randomly. Here’s the Simple Fix That Made It 100% Reliable.</title>
+      <link>http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/</link>
+      <pubDate>Mon, 24 Nov 2025 10:00:00 +0700</pubDate>
+      <guid>http://localhost:1313/til/fixing-flaky-spring-boot-integration-test-with-javatimeclock/</guid>
+      <description>My JWT token renewal test kept failing due to a race condition. I fixed it for good by making time a controllable dependency, not with hacks like Thread.sleep().</description>
+    </item>
+    <item>
+      <title>JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens</title>
+      <link>http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/</link>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/</guid>
+      <description>The hotel keycard analogy changed how I see authentication — access tokens for quick access, refresh tokens for long-term security. A perfect balance of speed and safety.</description>
+    </item>
+    <item>
       <title>How I Stopped Forgetting to Encode Passwords — Thanks to MapStruct</title>
       <link>http://localhost:1313/til/stopped-forgetting-encode-passwords-mapstruct/</link>
       <pubDate>Wed, 29 Oct 2025 00:00:00 +0000</pubDate>

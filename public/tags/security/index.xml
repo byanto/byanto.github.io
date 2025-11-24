@@ -3,7 +3,15 @@
         <title>Security - Tag - Budi Yanto</title>
         <link>http://localhost:1313/tags/security/</link>
         <description>Security - Tag - Budi Yanto</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 29 Oct 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/security/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/security/" rel="self" type="application/rss+xml" /><item>
+    <title>JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens</title>
+    <link>http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/</link>
+    <pubDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/</guid>
+    <description><![CDATA[The hotel keycard analogy changed how I see authentication — access tokens for quick access, refresh tokens for long-term security. A perfect balance of speed and safety.]]></description>
+</item>
+<item>
     <title>How I Stopped Forgetting to Encode Passwords — Thanks to MapStruct</title>
     <link>http://localhost:1313/til/stopped-forgetting-encode-passwords-mapstruct/</link>
     <pubDate>Wed, 29 Oct 2025 00:00:00 &#43;0000</pubDate>

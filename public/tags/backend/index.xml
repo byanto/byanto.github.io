@@ -3,5 +3,13 @@
         <title>Backend - Tag - Budi Yanto</title>
         <link>http://localhost:1313/tags/backend/</link>
         <description>Backend - Tag - Budi Yanto</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="http://localhost:1313/tags/backend/" rel="self" type="application/rss+xml" /></channel>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/backend/" rel="self" type="application/rss+xml" /><item>
+    <title>JWTs Explained Like a Hotel Keycard: The Dance Between Access and Refresh Tokens</title>
+    <link>http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/</link>
+    <pubDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Budi Yanto</author>
+    <guid>http://localhost:1313/til/jwt-hotel-keycard-access-refresh-tokens/</guid>
+    <description><![CDATA[The hotel keycard analogy changed how I see authentication — access tokens for quick access, refresh tokens for long-term security. A perfect balance of speed and safety.]]></description>
+</item>
+</channel>
 </rss>
