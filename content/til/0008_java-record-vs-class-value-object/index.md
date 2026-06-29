@@ -2,10 +2,8 @@
 title = "Why I swapped a Java record for a class (and the bug that made me do it)"
 date = 2026-06-29T18:35:00+07:00
 slug = "java-record-vs-class-value-object"
-description = "A Java record gives value objects equality for free, but its constructor is always public. Here is when a class with a private cons
-tructor is the better choice."
-summary = "I reached for a Java record out of habit and it quietly let bad data into my domain model. The fix was a plain class with a private con
-structor, plus a BigDecimal equality trap on the way."
+description = "A Java record gives value objects equality for free, but its constructor is always public. Here is when a class with a private constructor is the better choice."
+summary = "I reached for a Java record out of habit and it quietly let bad data into my domain model. The fix was a plain class with a private constructor, plus a BigDecimal equality trap on the way."
 tags = ["Java", "Record", "Value Object", "DDD", "BigDecimal", "Clean Code", "Software Design"]
 draft = false
 +++
